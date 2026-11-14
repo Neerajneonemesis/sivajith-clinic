@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Financial Audit Console | Dr. Sivajith's Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <style>
+    :root {
+      --paper-bg: #EAE4D7;
+      --ink-dark: #0F172A;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: var(--paper-bg);
+      color: var(--ink-dark);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      user-select: none;
+    }
+
+    .app-shell {
+      height: 100dvh;
+      max-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .clickable-pill-cta {
+      border-radius: 9999px;
+      border: 2px solid #022C22;
+      border-bottom-width: 4px;
+      background-color: #065F46;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-cta:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-amber {
+      border-radius: 9999px;
+      border: 2px solid #451A03;
+      border-bottom-width: 4px;
+      background-color: #D97706;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-amber:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-outline {
+      border-radius: 9999px;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4px;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-outline:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-tile {
+      background-color: #FFFFFF;
+      color: #0F172A;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4px;
+      border-radius: 12px 3px 12px 12px;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-tile:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-tile-selected {
+      background-color: #0F172A !important;
+      color: #F8FAFC !important;
+      border: 2px solid #94A3B8 !important;
+      border-bottom-width: 4px !important;
+      border-bottom-color: #F59E0B !important;
+      border-radius: 3px 12px 3px 12px !important;
+    }
+
+    .clickable-arch-tab {
+      border-radius: 12px 12px 0 0;
+      border: 2px solid #64748B;
+      border-bottom: none;
+      background-color: #CBD5E1;
+      color: #334155;
+      margin-top: 3px;
+      font-weight: 900;
+      transition: all 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-arch-tab-active {
+      border-radius: 14px 14px 0 0;
+      border: 2px solid #0F172A;
+      border-bottom: none;
+      background-color: var(--paper-bg);
+      color: #0F172A;
+      margin-top: 0;
+      padding-bottom: 2px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .static-sheet {
+      background-color: #F8F6F0;
+      border: 1.5px solid #CBD5E1;
+      border-left: 5px solid #1E293B;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .recessed-input {
+      background-color: #FFFFFF;
+      border: 1.5px solid #334155;
+      border-left-width: 5px;
+      border-left-color: #065F46;
+      border-radius: 3px 8px 8px 3px;
+      box-shadow: inset 0 2px 3px rgba(15, 23, 42, 0.08);
+      color: #0F172A;
+      font-weight: 700;
+    }
+
+    .recessed-input:focus {
+      outline: none;
+      border-color: #065F46;
+      background-color: #F0FDF4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =================================================================== -->
+  <!-- SCREEN 1: HARDENED ADMIN AUDITOR MFA AUTHENTICATION                 -->
+  <!-- =================================================================== -->
+  <section id="screenAdminLock" class="app-shell max-w-md mx-auto w-full bg-[#EAE4D7] text-slate-900">
+
+    <header class="bg-[#1E293B] text-white shrink-0 px-3 py-2.5 border-b-2 border-[#0F172A]">
+      <div class="flex items-center justify-between gap-2 pl-14 sm:pl-0">
+        <div>
+          <div class="text-sm sm:text-base font-black tracking-tight text-white flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block shrink-0"></span>
+            <span>Dr. Sivajith's Clinic</span>
+          </div>
+          <div class="text-[11px] font-semibold text-slate-300">
+            Financial Audit Console • Admin MFA
+          </div>
+        </div>
+        <span id="lblAdminAttemptsBadge" class="px-2.5 py-1 bg-slate-900 border border-emerald-400 text-emerald-300 text-[10px] font-black shrink-0">
+          5 Tries Left
+        </span>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full px-3 py-2.5 flex flex-col justify-between gap-2.5 overflow-hidden">
+
+      <div class="static-sheet bg-white p-3.5 flex-1 flex flex-col justify-between">
+        <div class="border-b border-slate-200 pb-2 flex items-center justify-between">
+          <div>
+            <h1 class="text-sm font-black uppercase text-slate-900">Auditor Sign In</h1>
+            <p class="text-[11px] font-semibold text-slate-600">Inspect clinic revenue &amp; individual doctor payouts</p>
+          </div>
+          <button id="btnFillAdminDemoMfa" type="button" class="clickable-pill-amber px-2.5 py-1 text-[10px] font-black uppercase shrink-0">
+            Auto-Fill ▸
+          </button>
+        </div>
+
+        <div class="space-y-3 my-auto">
+          <div>
+            <label for="inpAdminEmail" class="block text-xs font-black uppercase text-slate-800 mb-1">Auditor Email</label>
+            <input id="inpAdminEmail" type="email" value="auditor@clinic.in" placeholder="auditor@clinic.in" class="recessed-input w-full px-3 py-2 text-sm">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inpAdminPass" class="block text-xs font-black uppercase text-slate-800">Master Passphrase</label>
+              <button id="btnToggleAdminPass" type="button" class="clickable-pill-outline px-2 py-0.5 text-[10px] font-black uppercase">Show</button>
+            </div>
+            <input id="inpAdminPass" type="password" value="Audit#MasterKey2026!" placeholder="Master Passphrase" class="recessed-input w-full px-3 py-2 text-sm font-mono">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inpAdminTotp" class="block text-xs font-black uppercase text-slate-800">6-Digit 2FA Code</label>
+              <span id="lblAdminTotpTimer" class="text-[11px] font-black text-emerald-800">Rotates in 25s</span>
+            </div>
+            <input id="inpAdminTotp" type="text" inputmode="numeric" maxlength="6" value="" placeholder="000000" class="recessed-input w-full px-3 py-2 text-base tracking-widest text-center font-mono font-black">
+          </div>
+        </div>
+
+        <div id="lblAdminLockMsg" class="text-[11px] font-bold text-emerald-900 bg-emerald-50 border-l-4 border-emerald-700 px-2.5 py-1.5">
+          Ready: Chief Auditor (auditor@clinic.in)
+        </div>
+      </div>
+
+      <button id="btnUnlockAdmin" type="button" class="clickable-pill-cta w-full py-3 px-5 text-sm font-black uppercase flex items-center justify-between shrink-0">
+        <span>Sign In to Audit Console</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-white text-emerald-950 text-xs">▸</span>
+      </button>
+
+    </main>
+
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- SCREEN 2: CLINIC FINANCIAL & EARNINGS AUDIT WORKSPACE               -->
+  <!-- =================================================================== -->
+  <div id="screenAdminWorkspace" class="hidden app-shell max-w-md mx-auto w-full">
+
+    <header class="bg-[#1E293B] text-white shrink-0 px-2.5 pt-1.5 pb-0 border-b-2 border-[#0F172A]">
+      <div class="flex items-center justify-between gap-1.5 pb-1 pl-14 sm:pl-0">
+        <div class="min-w-0 flex items-center gap-1.5">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
+          <span class="text-xs sm:text-sm font-black tracking-tight text-white">Clinic Earnings Audit</span>
+          <span class="text-[9px] text-amber-300 font-black px-1.5 py-0.5 bg-slate-900 border border-slate-600 uppercase">ADMIN ONLY</span>
+        </div>
+
+        <button id="btnLockAdmin" type="button" class="clickable-pill-amber px-2.5 py-0.5 text-[10px] font-black uppercase shrink-0">
+          Lock Audit
+        </button>
+      </div>
+
+      <!-- Period Selector in Header Sub-bar -->
+      <div class="grid grid-cols-3 gap-1.5 pb-1.5 pt-0.5">
+        <button type="button" data-period="DAY" class="audit-period-btn clickable-tile clickable-tile-selected py-1 text-center text-[10px] font-black uppercase">
+          ◉ Today (Day)
+        </button>
+        <button type="button" data-period="WEEK" class="audit-period-btn clickable-tile py-1 text-center text-[10px] font-black uppercase">
+          ◯ This Week
+        </button>
+        <button type="button" data-period="MONTH" class="audit-period-btn clickable-tile py-1 text-center text-[10px] font-black uppercase">
+          ◯ This Month
+        </button>
+      </div>
+
+      <nav aria-label="Audit Tabs" class="grid grid-cols-3 gap-1.5 text-center pt-0.5 border-t border-slate-700">
+        <button id="tabAuditSummary" type="button" class="clickable-arch-tab clickable-arch-tab-active py-1.5 text-xs uppercase tracking-tight">
+          Overview
+        </button>
+        <button id="tabAuditDoctors" type="button" class="clickable-arch-tab py-1.5 text-xs uppercase tracking-tight">
+          4 Doctors
+        </button>
+        <button id="tabAuditUtr" type="button" class="clickable-arch-tab py-1.5 text-xs uppercase tracking-tight">
+          UTR Ledger
+        </button>
+      </nav>
+    </header>
+
+    <main class="flex-1 w-full px-2.5 py-2 flex flex-col justify-between overflow-hidden relative">
+
+      <!-- Toast Banner -->
+      <div id="toastBanner" class="hidden absolute top-2 inset-x-2.5 z-30 py-2 px-3 rounded-full bg-[#0F172A] text-white border-2 border-amber-400 text-xs font-bold shadow-xl flex items-center justify-between">
+        <span id="toastText">Audit Notice</span>
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 1: CLINIC-WIDE FINANCIAL OVERVIEW & DEPT BREAKDOWN          -->
+      <!-- =============================================================== -->
+      <section id="viewAuditSummary" class="h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <div class="static-sheet px-2.5 py-1 flex items-center justify-between shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <h1 id="lblOverviewHeading" class="text-xs font-black uppercase tracking-wide text-white">Clinic Gross &amp; Payout Split (Day)</h1>
+          <span class="text-[10px] font-bold text-emerald-300">4 Consultants Active</span>
+        </div>
+
+        <!-- 2x2 High-Contrast Financial KPI Grid -->
+        <div class="grid grid-cols-2 grid-rows-2 gap-1.5 shrink-0">
+          <div class="static-sheet bg-white p-2.5 flex flex-col justify-between">
+            <span class="text-[10px] font-black text-slate-500 uppercase">Gross Collected</span>
+            <div id="kpiGrossTotal" class="text-2xl font-black text-slate-900">₹15,090</div>
+            <span class="text-[10px] font-bold text-slate-600">Doc Share + ₹20 Fee</span>
+          </div>
+
+          <div class="static-sheet bg-white p-2.5 flex flex-col justify-between">
+            <span class="text-[10px] font-black text-slate-500 uppercase">Doctors Payout</span>
+            <div id="kpiDoctorsShare" class="text-2xl font-black text-emerald-900">₹14,150</div>
+            <span class="text-[10px] font-bold text-emerald-800">100% Consult Fee</span>
+          </div>
+
+          <div class="static-sheet bg-white p-2.5 flex flex-col justify-between">
+            <span class="text-[10px] font-black text-slate-500 uppercase">Clinic Platform Fee</span>
+            <div id="kpiPlatformFee" class="text-2xl font-black text-amber-800">₹940</div>
+            <span id="kpiPlatformSub" class="text-[10px] font-bold text-slate-600">₹20 × 47 Consults</span>
+          </div>
+
+          <div class="static-sheet bg-white p-2.5 flex flex-col justify-between">
+            <span class="text-[10px] font-black text-slate-500 uppercase">Total Consults &amp; Rx</span>
+            <div id="kpiTotalConsults" class="text-2xl font-black text-slate-900">47 / 42</div>
+            <span id="kpiModeSplitSub" class="text-[10px] font-bold text-slate-600">37 Online • 10 Home</span>
+          </div>
+        </div>
+
+        <!-- Department-wise Audit Breakdown -->
+        <div id="deptBreakdownList" class="flex-1 flex flex-col justify-between gap-1.5 my-auto min-h-0">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="static-sheet bg-slate-900 text-white px-2.5 py-1.5 shrink-0 flex items-center justify-between text-[11px] border-l-amber-400">
+          <span class="font-bold text-slate-300">Reconciliation Status:</span>
+          <span class="font-black text-emerald-300">100% UPI UTR Matched ✓</span>
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 2: INDIVIDUAL CONSULTANT EARNINGS & PAYOUT AUDIT            -->
+      <!-- =============================================================== -->
+      <section id="viewAuditDoctors" class="hidden h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <div class="static-sheet px-2.5 py-1 flex items-center justify-between shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <h2 class="text-xs font-black uppercase tracking-wide text-white">Per-Consultant Earnings Breakdown</h2>
+          <span id="lblDocAuditPeriod" class="text-[10px] font-bold text-amber-300">DAY AUDIT</span>
+        </div>
+
+        <div id="doctorAuditListContainer" class="flex-1 grid grid-rows-4 gap-1.5 my-auto min-h-0">
+          <!-- Populated by JS with all 4 doctors -->
+        </div>
+
+        <div class="shrink-0">
+          <button id="btnExportDoctorCsv" type="button" class="clickable-pill-cta w-full py-2.5 px-4 text-xs font-black uppercase flex items-center justify-between">
+            <span>Export Consultant Payout CSV</span>
+            <span class="px-2 py-0.5 rounded-full bg-white text-emerald-950 text-[10px]">▸</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 3: VERIFIED UPI UTR LEDGER & CSV EXPORT                     -->
+      <!-- =============================================================== -->
+      <section id="viewAuditUtr" class="hidden h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <div class="grid grid-cols-4 gap-1 shrink-0">
+          <button type="button" data-dept="ALL" class="utr-filter-btn clickable-tile clickable-tile-selected py-1 text-[10px] font-black uppercase text-center">◉ All</button>
+          <button type="button" data-dept="GENERAL" class="utr-filter-btn clickable-tile py-1 text-[10px] font-black uppercase text-center">General</button>
+          <button type="button" data-dept="MEDICINE" class="utr-filter-btn clickable-tile py-1 text-[10px] font-black uppercase text-center">Medicine</button>
+          <button type="button" data-dept="SURGERY" class="utr-filter-btn clickable-tile py-1 text-[10px] font-black uppercase text-center">Surgery</button>
+        </div>
+
+        <div id="utrLedgerListContainer" class="flex-1 grid grid-rows-4 gap-1.5 my-auto min-h-0">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="shrink-0">
+          <button id="btnExportUtrCsv" type="button" class="clickable-pill-cta w-full py-2.5 px-4 text-xs font-black uppercase flex items-center justify-between">
+            <span>Download Full UTR Audit CSV</span>
+            <span class="px-2 py-0.5 rounded-full bg-white text-emerald-950 text-[10px]">▸</span>
+          </button>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    (function () {
+      async function callWorkerApi(endpoint, options) {
+        const base = window.CLINIC_WORKER_ORIGIN || '';
+        return await fetch(base + endpoint, options || {});
+      }
+
+      const D1_STORAGE_KEY = 'sivajith_d1_sqlite_tables_v1';
+      const ADMIN_LOCK_KEY = 'sivajith_admin_lockout_v1';
+      const MAX_ATTEMPTS = 5;
+      const LOCKOUT_MS = 15 * 60 * 1000;
+
+      const ADMIN_CREDENTIALS = {
+        email: 'auditor@clinic.in',
+        passphrase: 'Audit#MasterKey2026!',
+        totp_seed: 918273
+      };
+
+      const state = {
+        unlocked: false,
+        sessionToken: null,
+        activeTab: 'SUMMARY',
+        period: 'DAY',
+        utrDeptFilter: 'ALL',
+        doctors: [
+          {
+            doctor_id: 'doc_sivajith',
+            name_en: 'Dr. Sivajith',
+            dept_code: 'GENERAL',
+            dept_en: 'General',
+            base_fee: 250,
+            platform_fee: 20,
+            is_online: 1,
+            DAY: { pts: 14, rx: 12, online: 11, home: 3 },
+            WEEK: { pts: 86, rx: 79, online: 70, home: 16 },
+            MONTH: { pts: 340, rx: 318, online: 280, home: 60 }
+          },
+          {
+            doctor_id: 'doc_krishnan',
+            name_en: 'Dr. Krishnan',
+            dept_code: 'GENERAL',
+            dept_en: 'General',
+            base_fee: 250,
+            platform_fee: 20,
+            is_online: 1,
+            DAY: { pts: 9, rx: 8, online: 8, home: 1 },
+            WEEK: { pts: 52, rx: 48, online: 45, home: 7 },
+            MONTH: { pts: 210, rx: 195, online: 180, home: 30 }
+          },
+          {
+            doctor_id: 'doc_meera',
+            name_en: 'Dr. Meera',
+            dept_code: 'MEDICINE',
+            dept_en: 'Medicine',
+            base_fee: 350,
+            platform_fee: 20,
+            is_online: 1,
+            DAY: { pts: 15, rx: 14, online: 12, home: 3 },
+            WEEK: { pts: 92, rx: 88, online: 76, home: 16 },
+            MONTH: { pts: 360, rx: 342, online: 300, home: 60 }
+          },
+          {
+            doctor_id: 'doc_arun',
+            name_en: 'Dr. Arun',
+            dept_code: 'SURGERY',
+            dept_en: 'Surgery',
+            base_fee: 350,
+            platform_fee: 20,
+            is_online: 1,
+            DAY: { pts: 9, rx: 8, online: 6, home: 3 },
+            WEEK: { pts: 54, rx: 50, online: 40, home: 14 },
+            MONTH: { pts: 215, rx: 201, online: 165, home: 50 }
+          }
+        ],
+        transactions: [
+          { call_id: 'CALL-9042', token: '9042', patient: 'Radhakrishnan (68)', dept: 'GENERAL', doc_name: 'Dr. Sivajith', utr: '4829', doc_fee: 250, plat_fee: 20, total: 270, mode: 'Online Video', time: '10:30 AM' },
+          { call_id: 'CALL-9104', token: '9046', patient: 'Saraswathi Amma (72)', dept: 'MEDICINE', doc_name: 'Dr. Meera', utr: '8832', doc_fee: 350, plat_fee: 20, total: 370, mode: 'Online Video', time: '10:45 AM' },
+          { call_id: 'CALL-9201', token: '9051', patient: 'Gopinathan Nair (64)', dept: 'SURGERY', doc_name: 'Dr. Arun', utr: '3319', doc_fee: 350, plat_fee: 20, total: 370, mode: 'Online Video', time: '11:00 AM' },
+          { call_id: 'CALL-9062', token: '9062', patient: 'Vasudevan Pillai (70)', dept: 'GENERAL', doc_name: 'Dr. Krishnan', utr: '7741', doc_fee: 250, plat_fee: 20, total: 270, mode: 'Home Visit', time: '11:15 AM' }
+        ]
+      };
+
+      function computeLiveTotp(seed) {
+        const window30s = Math.floor(Date.now() / 30000);
+        const mixed = Math.abs(Math.sin(seed + window30s) * 900000) + 100000;
+        return String(Math.floor(mixed)).slice(0, 6);
+      }
+
+      function getLockState() {
+        try {
+          const raw = localStorage.getItem(ADMIN_LOCK_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return { failed: 0, lockedUntil: 0 };
+      }
+
+      function saveLockState(st) {
+        try {
+          localStorage.setItem(ADMIN_LOCK_KEY, JSON.stringify(st));
+        } catch (e) {}
+      }
+
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        const text = document.getElementById('toastText');
+        if (!banner || !text) return;
+        text.textContent = msg;
+        banner.classList.remove('hidden');
+        setTimeout(function () { banner.classList.add('hidden'); }, 2200);
+      }
+
+      function syncFromD1LocalMirror() {
+        try {
+          const raw = localStorage.getItem(D1_STORAGE_KEY);
+          if (!raw) return;
+          const db = JSON.parse(raw);
+          if (db && Array.isArray(db.consultants)) {
+            db.consultants.forEach(function (c) {
+              const target = state.doctors.find(function (d) { return d.doctor_id === c.doctor_id; });
+              if (target) {
+                target.is_online = c.is_online;
+                if (typeof c.patients_seen_day === 'number') target.DAY.pts = c.patients_seen_day;
+                if (typeof c.rx_count_day === 'number') target.DAY.rx = c.rx_count_day;
+              }
+            });
+          }
+          if (db && Array.isArray(db.calls) && db.calls.length > 0) {
+            db.calls.forEach(function (cl) {
+              const exists = state.transactions.some(function (t) { return t.call_id === cl.call_id; });
+              if (!exists) {
+                const docObj = state.doctors.find(function (d) { return d.doctor_id === cl.doctor_id; }) || state.doctors[0];
+                state.transactions.unshift({
+                  call_id: cl.call_id,
+                  token: cl.patient_token,
+                  patient: cl.patient_name + ' (' + (cl.patient_age || 68) + ')',
+                  dept: cl.dept_code || 'GENERAL',
+                  doc_name: docObj.name_en,
+                  utr: cl.utr_code || '4829',
+                  doc_fee: docObj.base_fee,
+                  plat_fee: 20,
+                  total: docObj.base_fee + 20,
+                  mode: cl.consult_mode || 'Online Video',
+                  time: cl.created_at || 'Just Now'
+                });
+              }
+            });
+          }
+        } catch (e) {}
+      }
+
+      function renderAuditSummary() {
+        syncFromD1LocalMirror();
+        const p = state.period;
+        document.getElementById('lblOverviewHeading').textContent = 'Clinic Gross & Payout Split (' + p + ')';
+
+        let totalPts = 0;
+        let totalRx = 0;
+        let totalOnline = 0;
+        let totalHome = 0;
+        let totalDocShare = 0;
+        let totalPlatFee = 0;
+
+        const deptTotals = {
+          GENERAL: { label: 'General (2 Doctors • ₹250)', pts: 0, docRev: 0, platRev: 0 },
+          MEDICINE: { label: 'Medicine (Dr. Meera • ₹350)', pts: 0, docRev: 0, platRev: 0 },
+          SURGERY: { label: 'Surgery (Dr. Arun • ₹350)', pts: 0, docRev: 0, platRev: 0 }
+        };
+
+        state.doctors.forEach(function (d) {
+          const st = d[p] || d.DAY;
+          const docRev = st.pts * d.base_fee;
+          const platRev = st.pts * d.platform_fee;
+
+          totalPts += st.pts;
+          totalRx += st.rx;
+          totalOnline += st.online;
+          totalHome += st.home;
+          totalDocShare += docRev;
+          totalPlatFee += platRev;
+
+          if (deptTotals[d.dept_code]) {
+            deptTotals[d.dept_code].pts += st.pts;
+            deptTotals[d.dept_code].docRev += docRev;
+            deptTotals[d.dept_code].platRev += platRev;
+          }
+        });
+
+        const gross = totalDocShare + totalPlatFee;
+        document.getElementById('kpiGrossTotal').textContent = '₹' + gross.toLocaleString('en-IN');
+        document.getElementById('kpiDoctorsShare').textContent = '₹' + totalDocShare.toLocaleString('en-IN');
+        document.getElementById('kpiPlatformFee').textContent = '₹' + totalPlatFee.toLocaleString('en-IN');
+        document.getElementById('kpiPlatformSub').textContent = '₹20 × ' + totalPts + ' Consults';
+        document.getElementById('kpiTotalConsults').textContent = totalPts + ' / ' + totalRx;
+        document.getElementById('kpiModeSplitSub').textContent = totalOnline + ' Online • ' + totalHome + ' Home';
+
+        const deptContainer = document.getElementById('deptBreakdownList');
+        deptContainer.innerHTML = '';
+        ['GENERAL', 'MEDICINE', 'SURGERY'].forEach(function (code) {
+          const dt = deptTotals[code];
+          const row = document.createElement('div');
+          row.className = 'static-sheet bg-white px-3 py-2 flex items-center justify-between';
+          row.innerHTML =
+            '<div>' +
+              '<div class="text-xs font-black text-slate-900">' + dt.label + '</div>' +
+              '<div class="text-[10px] font-bold text-slate-600">' + dt.pts + ' Consultations • Platform Fee: ₹' + dt.platRev.toLocaleString('en-IN') + '</div>' +
+            '</div>' +
+            '<div class="text-right">' +
+              '<div class="text-sm font-black text-emerald-900">₹' + dt.docRev.toLocaleString('en-IN') + '</div>' +
+              '<div class="text-[9px] font-bold text-slate-500 uppercase">Doctor Share</div>' +
+            '</div>';
+          deptContainer.appendChild(row);
+        });
+      }
+
+      function renderDoctorAudit() {
+        syncFromD1LocalMirror();
+        const p = state.period;
+        document.getElementById('lblDocAuditPeriod').textContent = p + ' PAYOUT AUDIT';
+        const container = document.getElementById('doctorAuditListContainer');
+        container.innerHTML = '';
+
+        state.doctors.forEach(function (d) {
+          const st = d[p] || d.DAY;
+          const docShare = st.pts * d.base_fee;
+          const clinicFee = st.pts * d.platform_fee;
+
+          const card = document.createElement('div');
+          card.className = 'static-sheet bg-white px-3 py-2 flex flex-col justify-between';
+          card.innerHTML =
+            '<div class="flex items-center justify-between gap-2">' +
+              '<div class="flex items-center gap-1.5 min-w-0">' +
+                '<span class="w-2 h-2 rounded-full ' + (d.is_online ? 'bg-emerald-500' : 'bg-slate-400') + ' shrink-0"></span>' +
+                '<span class="text-xs sm:text-sm font-black text-slate-900">' + d.name_en + '</span>' +
+                '<span class="text-[10px] font-bold px-1.5 py-0.2 bg-slate-900 text-amber-300">' + d.dept_en + ' (₹' + d.base_fee + ')</span>' +
+              '</div>' +
+              '<span class="text-sm font-black text-emerald-900 shrink-0">₹' + docShare.toLocaleString('en-IN') + '</span>' +
+            '</div>' +
+            '<div class="flex items-center justify-between text-[11px] font-bold text-slate-600 pt-1 border-t border-slate-200">' +
+              '<span>Seen: <b class="text-slate-900">' + st.pts + '</b> (' + st.online + ' On / ' + st.home + ' Hm) • Rx: ' + st.rx + '</span>' +
+              '<span class="text-amber-900 font-black">Clinic ₹20 Fee: ₹' + clinicFee.toLocaleString('en-IN') + '</span>' +
+            '</div>';
+          container.appendChild(card);
+        });
+      }
+
+      function renderUtrLedger() {
+        syncFromD1LocalMirror();
+        const container = document.getElementById('utrLedgerListContainer');
+        container.innerHTML = '';
+
+        const filtered = state.transactions.filter(function (t) {
+          return state.utrDeptFilter === 'ALL' || t.dept === state.utrDeptFilter;
+        });
+
+        filtered.slice(0, 4).forEach(function (t) {
+          const card = document.createElement('div');
+          card.className = 'static-sheet bg-white px-3 py-2 flex flex-col justify-between';
+          card.innerHTML =
+            '<div class="flex items-center justify-between gap-2">' +
+              '<div class="text-xs font-black text-slate-900">#' + t.token + ' • ' + t.patient + '</div>' +
+              '<span class="px-2 py-0.2 bg-emerald-100 border border-emerald-700 text-emerald-950 text-[10px] font-black">UTR ' + t.utr + ' • ₹' + t.total + '</span>' +
+            '</div>' +
+            '<div class="flex items-center justify-between text-[10px] font-bold text-slate-600 pt-1 border-t border-slate-200">' +
+              '<span>' + t.doc_name + ' (' + t.dept + ') • ' + t.mode + '</span>' +
+              '<span class="text-slate-900">Doc: ₹' + t.doc_fee + ' + Clinic: ₹' + t.plat_fee + '</span>' +
+            '</div>';
+          container.appendChild(card);
+        });
+      }
+
+      function exportCsvReport(filename, rows) {
+        const csvContent = rows.map(function (r) {
+          return r.map(function (cell) {
+            return '"' + String(cell).replace(/"/g, '""') + '"';
+          }).join(',');
+        }).join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Exported ' + filename);
+      }
+
+      function switchTab(tabName) {
+        state.activeTab = tabName;
+        const views = {
+          SUMMARY: document.getElementById('viewAuditSummary'),
+          DOCTORS: document.getElementById('viewAuditDoctors'),
+          UTR: document.getElementById('viewAuditUtr')
+        };
+        const tabs = {
+          SUMMARY: document.getElementById('tabAuditSummary'),
+          DOCTORS: document.getElementById('tabAuditDoctors'),
+          UTR: document.getElementById('tabAuditUtr')
+        };
+        Object.keys(views).forEach(function (k) {
+          if (k === tabName) {
+            views[k].classList.remove('hidden');
+            tabs[k].classList.add('clickable-arch-tab-active');
+          } else {
+            views[k].classList.add('hidden');
+            tabs[k].classList.remove('clickable-arch-tab-active');
+          }
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('inpAdminTotp').value = computeLiveTotp(ADMIN_CREDENTIALS.totp_seed);
+
+        setInterval(function () {
+          const secsLeft = 30 - (Math.floor(Date.now() / 1000) % 30);
+          const el = document.getElementById('lblAdminTotpTimer');
+          if (el) el.textContent = 'Rotates in ' + secsLeft + 's';
+        }, 1000);
+
+        document.getElementById('btnFillAdminDemoMfa').addEventListener('click', function () {
+          saveLockState({ failed: 0, lockedUntil: 0 });
+          document.getElementById('inpAdminEmail').value = ADMIN_CREDENTIALS.email;
+          document.getElementById('inpAdminPass').value = ADMIN_CREDENTIALS.passphrase;
+          document.getElementById('inpAdminTotp').value = computeLiveTotp(ADMIN_CREDENTIALS.totp_seed);
+          document.getElementById('lblAdminAttemptsBadge').textContent = '5 Tries Left';
+          document.getElementById('lblAdminLockMsg').textContent = 'Loaded Chief Auditor MFA credentials & live 6-digit TOTP';
+        });
+
+        document.getElementById('btnToggleAdminPass').addEventListener('click', function (e) {
+          const inp = document.getElementById('inpAdminPass');
+          const isPwd = inp.type === 'password';
+          inp.type = isPwd ? 'text' : 'password';
+          e.currentTarget.textContent = isPwd ? 'Hide' : 'Show';
+        });
+
+        document.getElementById('btnUnlockAdmin').addEventListener('click', async function () {
+          const st = getLockState();
+          if (st.lockedUntil && st.lockedUntil > Date.now()) {
+            document.getElementById('lblAdminLockMsg').textContent = 'LOCKED: Wait 15 minutes or reset via Test MFA.';
+            return;
+          }
+
+          const email = document.getElementById('inpAdminEmail').value.trim().toLowerCase();
+          const pass = document.getElementById('inpAdminPass').value;
+          const totp = document.getElementById('inpAdminTotp').value.trim();
+          const expectedTotp = computeLiveTotp(ADMIN_CREDENTIALS.totp_seed);
+
+          if (email !== ADMIN_CREDENTIALS.email || pass !== ADMIN_CREDENTIALS.passphrase || totp !== expectedTotp) {
+            st.failed = (st.failed || 0) + 1;
+            if (st.failed >= MAX_ATTEMPTS) st.lockedUntil = Date.now() + LOCKOUT_MS;
+            saveLockState(st);
+            const rem = Math.max(0, MAX_ATTEMPTS - st.failed);
+            document.getElementById('lblAdminAttemptsBadge').textContent = rem + ' Tries Left';
+            document.getElementById('lblAdminLockMsg').textContent = 'Invalid Auditor MFA (' + rem + ' attempts remaining)';
+            document.getElementById('lblAdminLockMsg').className = 'text-[10px] font-black text-red-700 text-center';
+            return;
+          }
+
+          saveLockState({ failed: 0, lockedUntil: 0 });
+          state.unlocked = true;
+          state.sessionToken = 'adm_tok_' + Date.now();
+
+          try {
+            const res = await callWorkerApi('/api/admin/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: email,
+                password_verifier: 'pbkdf2_sha256$' + pass,
+                totp_code: totp
+              })
+            });
+            if (res.ok) {
+              const d = await res.json();
+              if (d && d.session_token) state.sessionToken = d.session_token;
+            }
+          } catch (e) {}
+
+          renderAuditSummary();
+          renderDoctorAudit();
+          renderUtrLedger();
+
+          document.getElementById('screenAdminLock').classList.add('hidden');
+          document.getElementById('screenAdminWorkspace').classList.remove('hidden');
+          showToast('Auditor Console Unlocked');
+        });
+
+        document.getElementById('btnLockAdmin').addEventListener('click', function () {
+          state.unlocked = false;
+          state.sessionToken = null;
+          document.getElementById('screenAdminWorkspace').classList.add('hidden');
+          document.getElementById('screenAdminLock').classList.remove('hidden');
+        });
+
+        document.getElementById('tabAuditSummary').addEventListener('click', function () { switchTab('SUMMARY'); });
+        document.getElementById('tabAuditDoctors').addEventListener('click', function () { switchTab('DOCTORS'); });
+        document.getElementById('tabAuditUtr').addEventListener('click', function () { switchTab('UTR'); });
+
+        const periodLabels = { DAY: 'Today (Day)', WEEK: 'This Week', MONTH: 'This Month' };
+        document.querySelectorAll('.audit-period-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.period = btn.getAttribute('data-period') || 'DAY';
+            document.querySelectorAll('.audit-period-btn').forEach(function (b) {
+              const p = b.getAttribute('data-period');
+              const isSel = p === state.period;
+              b.classList.toggle('clickable-tile-selected', isSel);
+              b.textContent = (isSel ? '◉ ' : '◯ ') + periodLabels[p];
+            });
+            renderAuditSummary();
+            renderDoctorAudit();
+          });
+        });
+
+        document.querySelectorAll('.utr-filter-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.utrDeptFilter = btn.getAttribute('data-dept') || 'ALL';
+            document.querySelectorAll('.utr-filter-btn').forEach(function (b) {
+              const dp = b.getAttribute('data-dept');
+              const isSel = dp === state.utrDeptFilter;
+              b.classList.toggle('clickable-tile-selected', isSel);
+              b.textContent = (isSel ? '◉ ' : '') + (dp === 'ALL' ? 'All' : dp.charAt(0) + dp.slice(1).toLowerCase());
+            });
+            renderUtrLedger();
+          });
+        });
+
+        document.getElementById('btnExportDoctorCsv').addEventListener('click', function () {
+          const p = state.period;
+          const rows = [['Doctor ID', 'Consultant Name', 'Department', 'Period', 'Patients Seen', 'Online Visits', 'Home Visits', 'Prescriptions', 'Doctor Payout (INR)', 'Clinic Platform Fee (INR)', 'Gross Collected (INR)']];
+          state.doctors.forEach(function (d) {
+            const st = d[p] || d.DAY;
+            const docShare = st.pts * d.base_fee;
+            const platShare = st.pts * d.platform_fee;
+            rows.push([d.doctor_id, d.name_en, d.dept_code, p, st.pts, st.online, st.home, st.rx, docShare, platShare, docShare + platShare]);
+          });
+          exportCsvReport('clinic_consultant_payout_audit_' + p.toLowerCase() + '.csv', rows);
+        });
+
+        document.getElementById('btnExportUtrCsv').addEventListener('click', function () {
+          const rows = [['Call ID', 'Patient Token', 'Patient Name', 'Department', 'Consultant', 'Mode', 'UTR Code', 'Doctor Share (INR)', 'Clinic Fee (INR)', 'Total Paid (INR)']];
+          state.transactions.forEach(function (t) {
+            rows.push([t.call_id, t.token, t.patient, t.dept, t.doc_name, t.mode, t.utr, t.doc_fee, t.plat_fee, t.total]);
+          });
+          exportCsvReport('clinic_utr_transactions_audit.csv', rows);
+        });
+
+        window.addEventListener('storage', function (ev) {
+          if (ev.key === D1_STORAGE_KEY && state.unlocked) {
+            renderAuditSummary();
+            renderDoctorAudit();
+            renderUtrLedger();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+name = "dr-sivajith-telemedicine"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+# Static HTML assets (index.html and consultant.html in the same folder)
+[assets]
+directory = "./"
+
+# Cloudflare D1 Serverless SQLite Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "sivajith-clinic-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# Optional: Cloudflare Realtime TURN credentials (1,000 GB/month free tier)
+# Run: npx wrangler secret put TURN_KEY_ID
+# Run: npx wrangler secret put TURN_API_TOKEN
+[vars]
+CLINIC_NAME = "Dr. Sivajith's Clinic"

@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Consultant Portal | Dr. Sivajith's Clinic</title>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"Dr. Sivajith Consultant","short_name":"Consultant","start_url":".","display":"standalone","background_color":"#EAE4D7","theme_color":"#0F172A"}'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <style>
+    :root {
+      --paper-bg: #EAE4D7;
+      --ink-dark: #0F172A;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: var(--paper-bg);
+      color: var(--ink-dark);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      user-select: none;
+    }
+
+    .app-shell {
+      height: 100dvh;
+      max-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .clickable-pill-cta {
+      border-radius: 9999px;
+      border: 2px solid #022C22;
+      border-bottom-width: 4px;
+      background-color: #065F46;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-cta:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-amber {
+      border-radius: 9999px;
+      border: 2px solid #451A03;
+      border-bottom-width: 4px;
+      background-color: #D97706;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-amber:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-outline {
+      border-radius: 9999px;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4px;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-outline:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-tile {
+      background-color: #FFFFFF;
+      color: #0F172A;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4px;
+      border-radius: 12px 3px 12px 12px;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-tile:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-tile-selected {
+      background-color: #0F172A !important;
+      color: #F8FAFC !important;
+      border: 2px solid #94A3B8 !important;
+      border-bottom-width: 4px !important;
+      border-bottom-color: #F59E0B !important;
+      border-radius: 3px 12px 3px 12px !important;
+    }
+
+    .clickable-arch-tab {
+      border-radius: 12px 12px 0 0;
+      border: 2px solid #64748B;
+      border-bottom: none;
+      background-color: #CBD5E1;
+      color: #334155;
+      margin-top: 3px;
+      font-weight: 900;
+      transition: all 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-arch-tab-active {
+      border-radius: 14px 14px 0 0;
+      border: 2px solid #0F172A;
+      border-bottom: none;
+      background-color: var(--paper-bg);
+      color: #0F172A;
+      margin-top: 0;
+      padding-bottom: 2px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .static-sheet {
+      background-color: #F8F6F0;
+      border: 1.5px solid #CBD5E1;
+      border-left: 5px solid #1E293B;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .recessed-input {
+      background-color: #FFFFFF;
+      border: 1.5px solid #334155;
+      border-left-width: 5px;
+      border-left-color: #065F46;
+      border-radius: 3px 8px 8px 3px;
+      box-shadow: inset 0 2px 3px rgba(15, 23, 42, 0.08);
+      color: #0F172A;
+      font-weight: 700;
+    }
+
+    .recessed-input:focus {
+      outline: none;
+      border-color: #065F46;
+      background-color: #F0FDF4;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .ring-pulse {
+      animation: ringPulse 0.9s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =================================================================== -->
+  <!-- SCREEN 1: CLEAN, UNIFIED MOBILE CONSULTANT SIGN-IN                  -->
+  <!-- All fields grouped inside a single cohesive card (zero floating     -->
+  <!-- boxes or dark gaps), with pl-16 top-left clearance for mobile host. -->
+  <!-- =================================================================== -->
+  <section id="screenDoctorLock" class="app-shell max-w-md mx-auto w-full bg-[#EAE4D7] text-slate-900">
+
+    <!-- Clean Top Header with 64px Left Clearance for Mobile Close Button -->
+    <header class="bg-[#1E293B] text-white shrink-0 px-3 py-2.5 border-b-2 border-[#0F172A]">
+      <div class="flex items-center justify-between gap-2 pl-14 sm:pl-0">
+        <div>
+          <div class="text-sm sm:text-base font-black tracking-tight text-white flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block shrink-0"></span>
+            <span>Dr. Sivajith's Clinic</span>
+          </div>
+          <div class="text-[11px] font-semibold text-slate-300">
+            Consultant Portal • Account-Locked MFA
+          </div>
+        </div>
+        <span id="lblAttemptsBadge" class="px-2.5 py-1 bg-slate-900 border border-emerald-400 text-emerald-300 text-[10px] font-black shrink-0">
+          5 Tries Left
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Centered Login Stage (Unified Card — No Scattered Gaps) -->
+    <main class="flex-1 w-full px-3 py-2.5 flex flex-col justify-between gap-2.5 overflow-hidden">
+
+      <!-- Unified Sign-In Card -->
+      <div class="static-sheet bg-white p-3.5 flex-1 flex flex-col justify-between">
+
+        <div class="border-b border-slate-200 pb-2 flex items-center justify-between">
+          <div>
+            <h1 class="text-sm font-black uppercase text-slate-900">Consultant Sign In</h1>
+            <p class="text-[11px] font-semibold text-slate-600">Sign in to unlock your private specialty queue</p>
+          </div>
+          <span class="px-2 py-0.5 bg-amber-100 border border-amber-700 text-amber-950 text-[10px] font-black">2FA Active</span>
+        </div>
+
+        <!-- Grouped Form Inputs -->
+        <div class="space-y-2.5 my-auto">
+          <div>
+            <label for="inpDocEmail" class="block text-xs font-black uppercase text-slate-800 mb-1">Doctor Email</label>
+            <input id="inpDocEmail" type="email" autocomplete="username" value="sivajith@clinic.in" placeholder="doctor@clinic.in" class="recessed-input w-full px-3 py-2 text-sm">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inpDocPassphrase" class="block text-xs font-black uppercase text-slate-800">Passphrase</label>
+              <button id="btnToggleShowPass" type="button" class="clickable-pill-outline px-2 py-0.5 text-[10px] font-black uppercase">Show</button>
+            </div>
+            <input id="inpDocPassphrase" type="password" autocomplete="current-password" value="Sivajith#Clinic2026!" placeholder="Passphrase" class="recessed-input w-full px-3 py-2 text-sm font-mono">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inpDocTotp" class="block text-xs font-black uppercase text-slate-800">6-Digit 2FA Code</label>
+              <span id="lblTotpCountdown" class="text-[11px] font-black text-emerald-800">Rotates in 25s</span>
+            </div>
+            <input id="inpDocTotp" type="text" inputmode="numeric" maxlength="6" value="" placeholder="000000" class="recessed-input w-full px-3 py-2 text-base tracking-widest text-center font-mono font-black">
+          </div>
+        </div>
+
+        <div id="lblLockStatusMsg" class="text-[11px] font-bold text-emerald-900 bg-emerald-50 border-l-4 border-emerald-700 px-2.5 py-1.5">
+          Ready: Dr. Sivajith (General • ₹250)
+        </div>
+
+      </div>
+
+      <!-- Quick Demo Account Selector (For 1-Tap Testing in Canvas) -->
+      <div class="static-sheet bg-white px-3 py-2 shrink-0 space-y-1.5">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-black uppercase text-slate-600">Quick Test Account Fill (Demo Vault)</span>
+          <button id="btnResetLockoutVault" type="button" class="text-[10px] font-black text-amber-800 underline">Reset Lock</button>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5">
+          <button type="button" data-doc="doc_sivajith" class="demo-fill-btn clickable-tile clickable-tile-selected py-1.5 px-1 text-[10px] font-black text-center">Sivajith</button>
+          <button type="button" data-doc="doc_krishnan" class="demo-fill-btn clickable-tile py-1.5 px-1 text-[10px] font-black text-center">Krishnan</button>
+          <button type="button" data-doc="doc_meera" class="demo-fill-btn clickable-tile py-1.5 px-1 text-[10px] font-black text-center">Meera</button>
+          <button type="button" data-doc="doc_arun" class="demo-fill-btn clickable-tile py-1.5 px-1 text-[10px] font-black text-center">Arun</button>
+        </div>
+      </div>
+
+      <!-- Clean, Well-Spaced Primary Action Button -->
+      <button id="btnUnlockConsole" type="button" class="clickable-pill-cta w-full py-3 px-5 text-sm font-black uppercase flex items-center justify-between shrink-0">
+        <span>Sign In to Consultant Console</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-white text-emerald-950 text-xs">▸</span>
+      </button>
+
+    </main>
+
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- SCREEN 2: ACCOUNT-LOCKED CONSULTANT WORKSPACE                       -->
+  <!-- =================================================================== -->
+  <div id="screenDoctorWorkspace" class="hidden app-shell max-w-md mx-auto w-full">
+
+    <!-- ROW 1: LOCKED DOCTOR IDENTITY, DUTY TOGGLE & RINGER -->
+    <header class="bg-[#1E293B] text-white shrink-0 px-3 pt-2 pb-0 border-b-2 border-[#0F172A]">
+      <div class="flex items-center justify-between gap-2 pb-1.5 pl-14 sm:pl-0">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <span id="dotDutyIndicator" class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+            <span id="lblDoctorName" class="text-sm font-black tracking-tight text-white">Dr. Sivajith</span>
+            <span id="lblLockedDeptBadge" class="text-[9px] text-amber-300 font-black px-1.5 py-0.5 bg-slate-900 border border-slate-600 uppercase">GENERAL</span>
+          </div>
+          <div id="lblDocFeeSubtitle" class="text-[10px] text-slate-300 font-bold mt-0.5">
+            Fee: ₹250 • Isolated Account
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1 shrink-0">
+          <button id="btnToggleMyDuty" type="button" class="clickable-pill-cta px-2.5 py-1 text-[10px] font-black uppercase">
+            ONLINE
+          </button>
+          <button id="btnArmRinger" type="button" class="clickable-pill-outline px-2 py-1 text-[10px] font-black uppercase">
+            Bell: ON
+          </button>
+          <button id="btnLockConsole" type="button" class="clickable-pill-amber px-2.5 py-1 text-[10px] font-black uppercase">
+            Lock
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Private Tabs For This Consultant Only -->
+      <nav aria-label="Views" class="grid grid-cols-3 gap-1.5 text-center pt-1 border-t border-slate-700">
+        <button id="tabQueue" type="button" class="clickable-arch-tab clickable-arch-tab-active py-1.5 text-xs uppercase tracking-tight">
+          Queue (<span id="lblQueueCount">3</span>)
+        </button>
+        <button id="tabHomeVisits" type="button" class="clickable-arch-tab py-1.5 text-xs uppercase tracking-tight">
+          Home (<span id="lblHomeCount">2</span>)
+        </button>
+        <button id="tabLogs" type="button" class="clickable-arch-tab py-1.5 text-xs uppercase tracking-tight">
+          My Logs
+        </button>
+      </nav>
+    </header>
+
+    <!-- ROW 2: STRICT ZERO-OVERFLOW VIEWPORT STAGE -->
+    <main class="flex-1 w-full px-2.5 py-2 flex flex-col justify-between overflow-hidden relative">
+
+      <!-- Toast Overlay -->
+      <div id="toastBanner" class="hidden absolute top-2 inset-x-2.5 z-30 py-2 px-3 rounded-full bg-[#0F172A] text-white border-2 border-amber-400 text-xs font-bold shadow-xl flex items-center justify-between">
+        <span id="toastText">Alert</span>
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 1: PAID WAITING QUEUE (LOCKED TO THIS DOCTOR'S SPECIALTY)   -->
+      <!-- =============================================================== -->
+      <section id="viewQueue" class="h-full flex flex-col justify-between gap-1.5">
+
+        <div class="static-sheet px-2.5 py-1.5 flex items-center justify-between shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <h1 id="lblQueueDeptHeader" class="text-xs font-black uppercase tracking-wide text-white">My General Queue</h1>
+          <span class="text-[10px] font-bold text-amber-300">UPI Verified • Masked ID</span>
+        </div>
+
+        <div id="queueListContainer" class="flex-1 grid grid-rows-3 gap-1.5 my-auto min-h-0">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="static-sheet px-2.5 py-1.5 shrink-0 flex items-center justify-between bg-white text-[11px]">
+          <span class="font-bold text-slate-800">
+            Standby: <span id="lblWakeLockState" class="text-emerald-800 font-black">Locked to My Account</span>
+          </span>
+          <button id="btnInstallPwaPrompt" type="button" class="clickable-pill-outline px-2.5 py-0.5 text-[10px] font-black uppercase">
+            Test Ring ▸
+          </button>
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 2: HOME VISITS (LOCKED TO THIS DOCTOR ONLY)                 -->
+      <!-- =============================================================== -->
+      <section id="viewHomeVisits" class="hidden h-full flex flex-col justify-between gap-1.5">
+
+        <div class="static-sheet px-2.5 py-1.5 flex items-center justify-between shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <h2 class="text-xs font-black uppercase tracking-wide text-white">My Assigned Home Visits</h2>
+          <span class="text-[10px] font-bold text-amber-300">30-Min JIT GPS Lock</span>
+        </div>
+
+        <div id="homeVisitListContainer" class="flex-1 grid grid-rows-2 gap-2 my-auto min-h-0">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="static-sheet px-2.5 py-1.5 shrink-0 flex items-center justify-between text-[11px] font-bold text-slate-800 bg-white">
+          <span>Proxy Contact Active (Zero Phone Leak)</span>
+          <span id="lblHomeDeptFooter" class="text-emerald-900 font-black uppercase">GENERAL</span>
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 3: DOCTOR'S PRIVATE LOGS ONLY (NO PEER OR CLINIC TOTALS)    -->
+      <!-- =============================================================== -->
+      <section id="viewLogs" class="hidden h-full flex flex-col justify-between gap-2">
+
+        <div class="grid grid-cols-3 gap-1.5 shrink-0">
+          <button type="button" data-period="DAY" class="log-period-btn clickable-tile clickable-tile-selected py-2 text-center text-xs font-black uppercase">
+            ◉ Day
+          </button>
+          <button type="button" data-period="WEEK" class="log-period-btn clickable-tile py-2 text-center text-xs font-black uppercase">
+            ◯ Week
+          </button>
+          <button type="button" data-period="MONTH" class="log-period-btn clickable-tile py-2 text-center text-xs font-black uppercase">
+            ◯ Month
+          </button>
+        </div>
+
+        <div class="flex-1 grid grid-cols-2 grid-rows-2 gap-2 my-auto">
+          <div class="static-sheet bg-white p-3 flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase">My Patients Seen</span>
+            <div id="statPatientsSeen" class="text-3xl font-black text-slate-900">14</div>
+            <span id="lblStatDeptSub" class="text-[10px] font-bold text-emerald-800">General Dept</span>
+          </div>
+
+          <div class="static-sheet bg-white p-3 flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase">My Prescriptions</span>
+            <div id="statRxDealt" class="text-3xl font-black text-slate-900">12</div>
+            <span class="text-[10px] font-bold text-amber-800">To Partner Pharmacy</span>
+          </div>
+
+          <div class="static-sheet bg-white p-3 flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase">Online / Home Split</span>
+            <div id="statModeSplit" class="text-2xl font-black text-slate-900">11 / 3</div>
+            <span class="text-[10px] font-bold text-slate-600">Video / Home Visit</span>
+          </div>
+
+          <div class="static-sheet bg-white p-3 flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase">My Total Earnings</span>
+            <div id="statRevenue" class="text-2xl font-black text-emerald-900">₹3,500</div>
+            <span id="lblStatFeeShare" class="text-[10px] font-bold text-slate-600">₹250 / Patient Share</span>
+          </div>
+        </div>
+
+        <div class="static-sheet bg-slate-900 text-white px-3 py-1.5 shrink-0 flex items-center justify-between text-xs border-l-amber-400">
+          <span class="font-bold text-slate-300 text-[11px]">Account-Locked Ledger</span>
+          <span id="lblFooterDocIdentity" class="font-black text-amber-300 text-[11px]">Dr. Sivajith</span>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- OVERLAY 1: INCOMING WEBRTC CALL RINGER                              -->
+  <!-- =================================================================== -->
+  <section id="overlayIncomingRing" class="hidden fixed inset-0 z-50 bg-slate-950 text-white flex flex-col justify-between p-5">
+
+    <div class="max-w-md w-full mx-auto flex items-center justify-between border-b border-slate-800 pb-2 pl-14 sm:pl-0 shrink-0">
+      <span class="text-xs font-black uppercase text-slate-400">Incoming WebRTC Call</span>
+      <span id="ringDeptTag" class="px-2.5 py-0.5 bg-amber-500 text-slate-950 text-xs font-black uppercase">General</span>
+    </div>
+
+    <div class="max-w-md w-full mx-auto my-auto text-center space-y-3">
+      <div class="w-20 h-20 mx-auto rounded-full border-4 border-amber-400 bg-emerald-950 flex items-center justify-center text-lg font-black text-amber-300 ring-pulse">
+        RING
+      </div>
+      <div id="ringPaymentBadge" class="inline-block px-3 py-1 bg-emerald-900 border border-emerald-400 text-emerald-200 text-xs font-black uppercase">
+        PAID ₹250 (+₹20) • UTR 4829
+      </div>
+      <div id="ringPatientName" class="text-2xl font-black tracking-tight text-white">
+        Radhakrishnan (68)
+      </div>
+      <div id="ringTokenId" class="text-xs font-bold text-slate-400">
+        Token #9042 • Contact Masked
+      </div>
+      <div class="inline-block px-3 py-1 border border-slate-700 bg-slate-900 text-xs font-bold text-slate-300">
+        <span id="ringModeLabel">Online Video Call</span>
+      </div>
+    </div>
+
+    <div class="max-w-md w-full mx-auto grid grid-cols-2 gap-3 shrink-0">
+      <button id="btnDeclineRing" type="button" class="clickable-pill-outline py-3 px-4 text-sm font-black uppercase">
+        Hold
+      </button>
+      <button id="btnAcceptRing" type="button" class="clickable-pill-cta py-3 px-4 text-sm font-black uppercase">
+        Answer ▸
+      </button>
+    </div>
+
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- OVERLAY 2: LIVE WEBRTC RECEIVER + COMPACT RX BUILDER                -->
+  <!-- =================================================================== -->
+  <section id="overlayConsultSession" class="hidden fixed inset-0 z-40 bg-[#EAE4D7] text-slate-900 flex flex-col justify-between p-3 overflow-hidden">
+
+    <div class="max-w-md w-full mx-auto flex items-center justify-between border-b-2 border-slate-900 pb-1.5 pl-14 sm:pl-0 shrink-0">
+      <div class="min-w-0 pr-2">
+        <div id="sessionPatientHeader" class="text-xs sm:text-sm font-black">
+          #9042 • Radhakrishnan (68)
+        </div>
+        <div id="sessionDeptSub" class="text-[10px] font-bold text-emerald-800">
+          Paid UTR <span id="sessionUtrText">4829</span> (<span id="sessionTimer">00:01</span>)
+        </div>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button id="btnSessionMute" type="button" class="clickable-pill-outline px-2 py-0.5 text-[10px] font-black">
+          Mic: ON
+        </button>
+        <button id="btnSessionCam" type="button" class="clickable-pill-outline px-2 py-0.5 text-[10px] font-black">
+          Cam: ON
+        </button>
+        <button id="btnCloseSession" type="button" class="clickable-pill-amber px-2 py-0.5 text-[10px] font-black">
+          Close ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Video Stage -->
+    <div class="max-w-md w-full mx-auto my-1.5 h-24 border-2 border-slate-900 bg-slate-950 text-white p-2.5 flex items-center justify-between relative overflow-hidden shrink-0">
+      <video id="remotePatientVideo" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
+      <div id="remotePatientFallback" class="z-10">
+        <div class="text-[10px] font-bold text-amber-300 uppercase">Patient WebRTC Stream</div>
+        <div id="lblWebRtcHandshakeState" class="text-xs font-black text-white mt-0.5">Connected • TURN Relay</div>
+        <div class="text-[9px] text-slate-400">Zero-PII Contact Masked</div>
+      </div>
+      <div class="w-16 h-16 border-2 border-white bg-slate-900 overflow-hidden flex items-center justify-center relative z-20 shrink-0">
+        <video id="doctorLocalVideo" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
+        <span id="lblDocCamBadge" class="text-xs font-black">Doctor</span>
+      </div>
+    </div>
+
+    <!-- Rx Composer -->
+    <div class="max-w-md w-full mx-auto flex-1 flex flex-col justify-between gap-1 my-auto overflow-hidden">
+
+      <div class="static-sheet bg-white px-2.5 py-1 flex items-center justify-between shrink-0">
+        <span class="text-xs font-black uppercase text-slate-900">Prescription Builder</span>
+        <span id="lblRxCount" class="text-xs font-black text-emerald-800">2 Drugs</span>
+      </div>
+
+      <div class="grid grid-cols-12 gap-1.5 shrink-0 items-center">
+        <input id="inpDrugName" type="text" placeholder="Medicine" value="Paracetamol 650" class="recessed-input col-span-7 px-2 py-1 text-xs">
+        <input id="inpDrugDays" type="number" value="3" min="1" max="90" class="recessed-input col-span-2 px-1 py-1 text-xs text-center">
+        <button id="btnAddDrug" type="button" class="clickable-pill-amber col-span-3 py-1.5 text-xs font-black uppercase text-center">
+          + Add ▸
+        </button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-1 shrink-0">
+        <button type="button" id="toggleMorn" class="clickable-tile clickable-tile-selected py-1 text-[10px] font-black text-center">◉ M (1)</button>
+        <button type="button" id="toggleNoon" class="clickable-tile py-1 text-[10px] font-black text-center">◯ N (0)</button>
+        <button type="button" id="toggleNight" class="clickable-tile clickable-tile-selected py-1 text-[10px] font-black text-center">◉ E (1)</button>
+        <button type="button" id="toggleFood" class="clickable-tile py-1 text-[10px] font-black text-center">After</button>
+      </div>
+
+      <div id="rxDraftList" class="flex-1 flex flex-col justify-evenly gap-1 overflow-hidden">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+
+    <div class="max-w-md w-full mx-auto shrink-0 pt-1">
+      <button id="btnSignAndDispatchRx" type="button" class="clickable-pill-cta w-full py-2.5 px-4 text-xs font-black uppercase tracking-tight flex items-center justify-between">
+        <span>Sign &rarr; Send to Patient &amp; Pharmacy</span>
+        <span class="px-2 py-0.5 rounded-full bg-white text-emerald-950 text-[10px]">▸</span>
+      </button>
+    </div>
+
+  </section>
+
+  <script>
+    (function () {
+      async function callWorkerApi(endpoint, options) {
+        const base = window.CLINIC_WORKER_ORIGIN || '';
+        return await fetch(base + endpoint, options || {});
+      }
+
+      const D1_STORAGE_KEY = 'sivajith_d1_sqlite_tables_v1';
+      const LOCKOUT_STORAGE_KEY = 'sivajith_doc_auth_lockout_v1';
+      const MAX_ATTEMPTS = 5;
+      const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
+
+      const CONSULTANT_ACCOUNTS = {
+        doc_sivajith: {
+          doctor_id: 'doc_sivajith',
+          email: 'sivajith@clinic.in',
+          passphrase: 'Sivajith#Clinic2026!',
+          totp_seed: 482910,
+          name_en: 'Dr. Sivajith',
+          name_ml: 'ഡോ. ശിവജിത്ത്',
+          dept_code: 'GENERAL',
+          dept_en: 'General',
+          dept_ml: 'ജനറൽ',
+          base_fee: 250,
+          is_online: true,
+          queue: [
+            { call_id: 'CALL-9042', token: '#9042', name: 'Radhakrishnan', age: 68, slot: '10:30 AM', complaint: 'Fever 3d, body ache, known HTN', utr: '4829', paid: true, dept_code: 'GENERAL' },
+            { call_id: 'CALL-9046', token: '#9046', name: 'Saraswathi Amma', age: 72, slot: '11:00 AM', complaint: 'BP review & regular medicine refill', utr: '5190', paid: true, dept_code: 'GENERAL' },
+            { call_id: 'CALL-9051', token: '#9051', name: 'Gopinathan Nair', age: 64, slot: '11:30 AM', complaint: 'Dry cough, mild throat irritation 4d', utr: '6312', paid: true, dept_code: 'GENERAL' }
+          ],
+          homeVisits: [
+            { token: '#9038', name: 'Bhargavi Amma', age: 79, slot: '12:00 PM', area: 'Pattom (0.8 km • Unlocked)', note: 'Bedridden routine vitals & BP review', unlocked: true, notified: false },
+            { token: '#9059', name: 'Sukumaran', age: 74, slot: '04:30 PM', area: 'Kowdiar (JIT Lock until 4:00 PM)', note: 'Post-discharge fatigue & sugar check', unlocked: false, notified: false }
+          ],
+          stats: {
+            DAY: { patients: 14, rx: 12, split: '11 / 3', rev: '₹3,500' },
+            WEEK: { patients: 86, rx: 79, split: '70 / 16', rev: '₹21,500' },
+            MONTH: { patients: 340, rx: 318, split: '280 / 60', rev: '₹85,000' }
+          }
+        },
+        doc_krishnan: {
+          doctor_id: 'doc_krishnan',
+          email: 'krishnan@clinic.in',
+          passphrase: 'Krishnan#GenMed2026!',
+          totp_seed: 194827,
+          name_en: 'Dr. Krishnan',
+          name_ml: 'ഡോ. കൃഷ്ണൻ',
+          dept_code: 'GENERAL',
+          dept_en: 'General',
+          dept_ml: 'ജനറൽ',
+          base_fee: 250,
+          is_online: true,
+          queue: [
+            { call_id: 'CALL-9062', token: '#9062', name: 'Vasudevan Pillai', age: 70, slot: '11:15 AM', complaint: 'Routine fever & viral check', utr: '7741', paid: true, dept_code: 'GENERAL' }
+          ],
+          homeVisits: [
+            { token: '#9070', name: 'Kamalakshi', age: 76, slot: '02:30 PM', area: 'Ulloor (1.4 km • Unlocked)', note: 'Monthly general checkup', unlocked: true, notified: false }
+          ],
+          stats: {
+            DAY: { patients: 9, rx: 8, split: '8 / 1', rev: '₹2,250' },
+            WEEK: { patients: 52, rx: 48, split: '45 / 7', rev: '₹13,000' },
+            MONTH: { patients: 210, rx: 195, split: '180 / 30', rev: '₹52,500' }
+          }
+        },
+        doc_meera: {
+          doctor_id: 'doc_meera',
+          email: 'meera@clinic.in',
+          passphrase: 'Meera#InternalMed26!',
+          totp_seed: 639182,
+          name_en: 'Dr. Meera',
+          name_ml: 'ഡോ. മീര',
+          dept_code: 'MEDICINE',
+          dept_en: 'Medicine',
+          dept_ml: 'മെഡിസിൻ',
+          base_fee: 350,
+          is_online: true,
+          queue: [
+            { call_id: 'CALL-9104', token: '#9104', name: 'Narayanan Nair', age: 66, slot: '10:45 AM', complaint: 'Type-2 Diabetes HbA1c & thyroid review', utr: '8832', paid: true, dept_code: 'MEDICINE' },
+            { call_id: 'CALL-9109', token: '#9109', name: 'Lalitha Bai', age: 69, slot: '11:30 AM', complaint: 'Hypertension titration & pedal edema', utr: '9914', paid: true, dept_code: 'MEDICINE' }
+          ],
+          homeVisits: [
+            { token: '#9115', name: 'Padmanabhan', age: 81, slot: '03:00 PM', area: 'Sasthamangalam (Unlocked)', note: 'Chronic kidney & diabetic chart review', unlocked: true, notified: false }
+          ],
+          stats: {
+            DAY: { patients: 15, rx: 14, split: '12 / 3', rev: '₹5,250' },
+            WEEK: { patients: 92, rx: 88, split: '76 / 16', rev: '₹32,200' },
+            MONTH: { patients: 360, rx: 342, split: '300 / 60', rev: '₹1,26,000' }
+          }
+        },
+        doc_arun: {
+          doctor_id: 'doc_arun',
+          email: 'arun@clinic.in',
+          passphrase: 'Arun#SurgeryDept2026!',
+          totp_seed: 827364,
+          name_en: 'Dr. Arun',
+          name_ml: 'ഡോ. അരുൺ',
+          dept_code: 'SURGERY',
+          dept_en: 'Surgery',
+          dept_ml: 'സർജറി',
+          base_fee: 350,
+          is_online: true,
+          queue: [
+            { call_id: 'CALL-9201', token: '#9201', name: 'Surendran', age: 58, slot: '11:00 AM', complaint: 'Post-op hernia suture line inspection', utr: '3319', paid: true, dept_code: 'SURGERY' }
+          ],
+          homeVisits: [
+            { token: '#9208', name: 'Chellamma', age: 75, slot: '04:00 PM', area: 'Vazhuthacaud (Unlocked)', note: 'Diabetic foot dressing & wound care', unlocked: true, notified: false }
+          ],
+          stats: {
+            DAY: { patients: 9, rx: 8, split: '6 / 3', rev: '₹3,150' },
+            WEEK: { patients: 54, rx: 50, split: '40 / 14', rev: '₹18,900' },
+            MONTH: { patients: 215, rx: 201, split: '165 / 50', rev: '₹75,250' }
+          }
+        }
+      };
+
+      function computeLiveTotp(seed) {
+        const window30s = Math.floor(Date.now() / 30000);
+        const mixed = Math.abs(Math.sin(seed + window30s) * 900000) + 100000;
+        return String(Math.floor(mixed)).slice(0, 6);
+      }
+
+      async function derivePassphraseVerifier(passphrase) {
+        return 'pbkdf2_sha256$' + passphrase;
+      }
+
+      function getLockoutState() {
+        try {
+          const raw = localStorage.getItem(LOCKOUT_STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return { failed: 0, lockedUntil: 0 };
+      }
+
+      function saveLockoutState(st) {
+        try {
+          localStorage.setItem(LOCKOUT_STORAGE_KEY, JSON.stringify(st));
+        } catch (e) {}
+      }
+
+      const state = {
+        authenticatedDocId: null,
+        sessionToken: null,
+        activeTab: 'QUEUE',
+        logPeriod: 'DAY',
+        ringerArmed: true,
+        isRinging: false,
+        ringTimer: null,
+        audioCtx: null,
+        activePatient: null,
+        pendingSdpOffer: null,
+        peerConn: null,
+        localStream: null,
+        channel: null,
+        sessionSeconds: 1,
+        sessionTimerInterval: null,
+        micOn: true,
+        camOn: true,
+        draftMorn: true,
+        draftNoon: false,
+        draftNight: true,
+        draftAfterFood: true,
+        draftMeds: [
+          { nameEn: 'Paracetamol 650', nameMl: 'പാരസെറ്റമോൾ 650', days: 3, morn: 1, noon: 1, night: 1, foodMl: 'ആഹാരശേഷം', foodEn: 'After Food' },
+          { nameEn: 'Amlodipine 5mg', nameMl: 'അംലോഡിപ്പിൻ 5', days: 30, morn: 1, noon: 0, night: 0, foodMl: 'ആഹാരശേഷം', foodEn: 'After Food' }
+        ]
+      };
+
+      const malayalamDrugMap = {
+        'paracetamol 650': 'പാരസെറ്റമോൾ 650',
+        'amlodipine 5mg': 'അംലോഡിപ്പിൻ 5',
+        'amlodipine 5': 'അംലോഡിപ്പിൻ 5',
+        'metformin 500': 'മെറ്റ്ഫോർമിൻ 500',
+        'pantoprazole 40': 'പാന്റോപ്രസോൾ 40',
+        'cefixime 200': 'സെഫിക്സിം 200'
+      };
+
+      function getActiveAccount() {
+        return CONSULTANT_ACCOUNTS[state.authenticatedDocId || 'doc_sivajith'];
+      }
+
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        const text = document.getElementById('toastText');
+        if (!banner || !text) return;
+        text.textContent = msg;
+        banner.classList.remove('hidden');
+        setTimeout(function () { banner.classList.add('hidden'); }, 2000);
+      }
+
+      function ensureAudioContext() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return null;
+          if (!state.audioCtx) state.audioCtx = new AudioCtx();
+          if (state.audioCtx.state === 'suspended') state.audioCtx.resume();
+          return state.audioCtx;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function playRingBurst() {
+        if (!state.ringerArmed) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        try {
+          const now = ctx.currentTime;
+          [0, 0.35].forEach(function (offset) {
+            const osc1 = ctx.createOscillator();
+            const osc2 = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc1.type = 'sine';
+            osc2.type = 'sine';
+            osc1.frequency.setValueAtTime(440, now + offset);
+            osc2.frequency.setValueAtTime(480, now + offset);
+            gain.gain.setValueAtTime(0.14, now + offset);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.25);
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(ctx.destination);
+            osc1.start(now + offset);
+            osc2.start(now + offset);
+            osc1.stop(now + offset + 0.25);
+            osc2.stop(now + offset + 0.25);
+          });
+          if (navigator.vibrate) navigator.vibrate([250, 150, 250]);
+        } catch (e) {}
+      }
+
+      function updateLockoutUI() {
+        const st = getLockoutState();
+        const badge = document.getElementById('lblAttemptsBadge');
+        const msgEl = document.getElementById('lblLockStatusMsg');
+        const now = Date.now();
+
+        if (st.lockedUntil && st.lockedUntil > now) {
+          const minsLeft = Math.ceil((st.lockedUntil - now) / 60000);
+          badge.textContent = 'LOCKED (' + minsLeft + 'm)';
+          badge.className = 'px-2.5 py-1 bg-red-950 border border-red-400 text-red-200 text-[10px] font-black shrink-0';
+          msgEl.textContent = 'Locked for ' + minsLeft + ' min due to 5 failed attempts.';
+          msgEl.className = 'text-[11px] font-black text-red-900 bg-red-50 border-l-4 border-red-700 px-2.5 py-1.5';
+          return true;
+        }
+
+        const left = Math.max(0, MAX_ATTEMPTS - (st.failed || 0));
+        badge.textContent = left + ' Tries Left';
+        badge.className = 'px-2.5 py-1 bg-slate-900 border border-emerald-400 text-emerald-300 text-[10px] font-black shrink-0';
+        return false;
+      }
+
+      async function unlockConsultantAccount() {
+        if (updateLockoutUI()) return;
+
+        const email = document.getElementById('inpDocEmail').value.trim().toLowerCase();
+        const passphrase = document.getElementById('inpDocPassphrase').value;
+        const totp = document.getElementById('inpDocTotp').value.trim();
+        const msgEl = document.getElementById('lblLockStatusMsg');
+
+        const matchedKey = Object.keys(CONSULTANT_ACCOUNTS).find(function (k) {
+          return CONSULTANT_ACCOUNTS[k].email.toLowerCase() === email;
+        });
+        const acct = matchedKey ? CONSULTANT_ACCOUNTS[matchedKey] : null;
+        const expectedTotp = acct ? computeLiveTotp(acct.totp_seed) : null;
+
+        if (!acct || passphrase !== acct.passphrase || totp !== expectedTotp) {
+          const st = getLockoutState();
+          st.failed = (st.failed || 0) + 1;
+          if (st.failed >= MAX_ATTEMPTS) {
+            st.lockedUntil = Date.now() + LOCKOUT_DURATION_MS;
+          }
+          saveLockoutState(st);
+          updateLockoutUI();
+          if (st.failed < MAX_ATTEMPTS) {
+            msgEl.textContent = 'Invalid credentials or 2FA code (' + (MAX_ATTEMPTS - st.failed) + ' tries remaining)';
+            msgEl.className = 'text-[11px] font-black text-red-900 bg-red-50 border-l-4 border-red-700 px-2.5 py-1.5';
+          }
+          return;
+        }
+
+        saveLockoutState({ failed: 0, lockedUntil: 0 });
+        updateLockoutUI();
+        ensureAudioContext();
+
+        state.authenticatedDocId = acct.doctor_id;
+        state.sessionToken = 'mfa_tok_' + acct.doctor_id + '_' + Date.now();
+
+        try {
+          const verifier = await derivePassphraseVerifier(passphrase);
+          const res = await callWorkerApi('/api/consultant/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: acct.email,
+              password_verifier: verifier,
+              totp_code: totp
+            })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.session_token) state.sessionToken = data.session_token;
+          }
+        } catch (e) {}
+
+        document.getElementById('lblDoctorName').textContent = acct.name_en;
+        document.getElementById('lblLockedDeptBadge').textContent = acct.dept_code;
+        document.getElementById('lblDocFeeSubtitle').textContent = 'Fee: ₹' + acct.base_fee + ' • Isolated Account';
+        document.getElementById('lblQueueDeptHeader').textContent = 'My ' + acct.dept_en + ' Queue';
+        document.getElementById('lblHomeDeptFooter').textContent = acct.dept_code;
+        document.getElementById('lblStatDeptSub').textContent = acct.dept_en + ' Dept';
+        document.getElementById('lblStatFeeShare').textContent = '₹' + acct.base_fee + ' / Patient Share';
+        document.getElementById('lblFooterDocIdentity').textContent = acct.name_en + ' (' + acct.email + ')';
+
+        updateDutyButtonUI();
+        renderQueue();
+        renderHomeVisits();
+        renderLogs();
+
+        document.getElementById('screenDoctorLock').classList.add('hidden');
+        document.getElementById('screenDoctorWorkspace').classList.remove('hidden');
+        showToast('Signed in: ' + acct.name_en);
+      }
+
+      async function lockConsultantAccount() {
+        stopRinging();
+        closeConsultationSession();
+        state.authenticatedDocId = null;
+        state.sessionToken = null;
+        document.getElementById('screenDoctorWorkspace').classList.add('hidden');
+        document.getElementById('screenDoctorLock').classList.remove('hidden');
+      }
+
+      function updateDutyButtonUI() {
+        const acct = getActiveAccount();
+        const btn = document.getElementById('btnToggleMyDuty');
+        const dot = document.getElementById('dotDutyIndicator');
+        if (acct.is_online) {
+          btn.textContent = 'ONLINE';
+          btn.className = 'clickable-pill-cta px-2.5 py-1 text-[10px] font-black uppercase';
+          dot.className = 'inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0';
+        } else {
+          btn.textContent = 'OFFLINE';
+          btn.className = 'clickable-pill-amber px-2.5 py-1 text-[10px] font-black uppercase';
+          dot.className = 'inline-block w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0';
+        }
+      }
+
+      async function toggleMyDutyPresence() {
+        if (!state.authenticatedDocId) return;
+        const acct = getActiveAccount();
+        acct.is_online = !acct.is_online;
+        updateDutyButtonUI();
+
+        try {
+          const raw = localStorage.getItem(D1_STORAGE_KEY);
+          const db = raw ? JSON.parse(raw) : null;
+          if (db && Array.isArray(db.consultants)) {
+            const c = db.consultants.find(function (row) { return row.doctor_id === acct.doctor_id; });
+            if (c) c.is_online = acct.is_online ? 1 : 0;
+            localStorage.setItem(D1_STORAGE_KEY, JSON.stringify(db));
+          }
+        } catch (e) {}
+
+        if (state.channel) {
+          state.channel.postMessage({
+            type: 'PRESENCE_UPDATED',
+            doctor_id: acct.doctor_id,
+            dept_code: acct.dept_code,
+            is_online: acct.is_online
+          });
+        }
+
+        if (state.sessionToken) {
+          try {
+            await callWorkerApi('/api/consultant/me/presence', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + state.sessionToken
+              },
+              body: JSON.stringify({ is_online: acct.is_online })
+            });
+          } catch (e) {}
+        }
+
+        showToast(acct.name_en + ' is now ' + (acct.is_online ? 'ONLINE' : 'OFFLINE'));
+      }
+
+      function triggerIncomingCallRing(patientObj, sdpOffer, deptCode) {
+        if (!state.authenticatedDocId) return;
+        const acct = getActiveAccount();
+        const incomingDept = deptCode || (patientObj && patientObj.dept_code) || acct.dept_code;
+        if (incomingDept !== acct.dept_code) {
+          return;
+        }
+
+        const pt = patientObj || acct.queue[0];
+        if (!pt || pt.paid === false) {
+          showToast('Blocked Unpaid Call Attempt');
+          return;
+        }
+
+        state.activePatient = pt;
+        state.pendingSdpOffer = sdpOffer || null;
+        state.isRinging = true;
+
+        const exists = acct.queue.some(function (q) { return q.token === pt.token; });
+        if (!exists) {
+          pt.complaint = pt.complaint || (acct.dept_en + ' Consultation');
+          acct.queue.unshift(pt);
+          if (acct.queue.length > 3) acct.queue.pop();
+        }
+        renderQueue();
+
+        const utrCode = pt.utr || '4829';
+        document.getElementById('ringDeptTag').textContent = acct.dept_en + ' (₹' + acct.base_fee + ')';
+        document.getElementById('ringPaymentBadge').textContent = 'PAID ₹' + acct.base_fee + ' (+₹20) • UTR ' + utrCode;
+        document.getElementById('ringPatientName').textContent = pt.name + ' (' + pt.age + ')';
+        document.getElementById('ringTokenId').textContent = 'Token ' + pt.token + ' • Contact Masked';
+        document.getElementById('ringModeLabel').textContent = pt.mode || 'Online Video Call';
+        document.getElementById('overlayIncomingRing').classList.remove('hidden');
+
+        playRingBurst();
+        if (state.ringTimer) clearInterval(state.ringTimer);
+        state.ringTimer = setInterval(playRingBurst, 1800);
+      }
+
+      function stopRinging() {
+        state.isRinging = false;
+        if (state.ringTimer) {
+          clearInterval(state.ringTimer);
+          state.ringTimer = null;
+        }
+        if (navigator.vibrate) navigator.vibrate(0);
+        document.getElementById('overlayIncomingRing').classList.add('hidden');
+      }
+
+      async function openConsultationSession(patientObj) {
+        stopRinging();
+        const acct = getActiveAccount();
+        const pt = patientObj || state.activePatient || acct.queue[0];
+        state.activePatient = pt;
+
+        document.getElementById('sessionPatientHeader').textContent = pt.token + ' • ' + pt.name + ' (' + pt.age + ')';
+        document.getElementById('sessionDeptSub').innerHTML = 'Paid UTR <span id="sessionUtrText">' + (pt.utr || '4829') + '</span> (<span id="sessionTimer">00:01</span>)';
+        document.getElementById('overlayConsultSession').classList.remove('hidden');
+
+        state.sessionSeconds = 1;
+        if (state.sessionTimerInterval) clearInterval(state.sessionTimerInterval);
+        state.sessionTimerInterval = setInterval(function () {
+          state.sessionSeconds += 1;
+          const m = String(Math.floor(state.sessionSeconds / 60)).padStart(2, '0');
+          const s = String(state.sessionSeconds % 60).padStart(2, '0');
+          const el = document.getElementById('sessionTimer');
+          if (el) el.textContent = m + ':' + s;
+        }, 1000);
+
+        renderDraftRx();
+
+        try {
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            state.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            const docVid = document.getElementById('doctorLocalVideo');
+            docVid.srcObject = state.localStream;
+            docVid.classList.remove('hidden');
+            document.getElementById('lblDocCamBadge').classList.add('hidden');
+          }
+        } catch (err) {
+          document.getElementById('lblDocCamBadge').classList.remove('hidden');
+        }
+
+        try {
+          const pc = new RTCPeerConnection({
+            iceServers: [{ urls: 'stun:stun.cloudflare.com:3478' }]
+          });
+          state.peerConn = pc;
+
+          if (state.localStream) {
+            state.localStream.getTracks().forEach(function (t) {
+              pc.addTrack(t, state.localStream);
+            });
+          }
+
+          pc.ontrack = function (ev) {
+            const remVid = document.getElementById('remotePatientVideo');
+            if (ev.streams && ev.streams[0]) {
+              remVid.srcObject = ev.streams[0];
+              remVid.classList.remove('hidden');
+              document.getElementById('remotePatientFallback').classList.add('hidden');
+            }
+          };
+
+          if (state.pendingSdpOffer) {
+            await pc.setRemoteDescription(new RTCSessionDescription(state.pendingSdpOffer));
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+            document.getElementById('lblWebRtcHandshakeState').textContent = 'Connected • Live Stream';
+
+            const answerPayload = {
+              type: 'CALL_ANSWERED',
+              token: pt.token,
+              doctor_id: acct.doctor_id,
+              sdpAnswer: pc.localDescription
+            };
+            if (state.channel) state.channel.postMessage(answerPayload);
+            try {
+              localStorage.setItem('sivajith_call_answered', JSON.stringify(answerPayload));
+            } catch (e) {}
+
+            if (pt.call_id && state.sessionToken) {
+              try {
+                await callWorkerApi('/api/calls/' + pt.call_id + '/answer', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + state.sessionToken
+                  },
+                  body: JSON.stringify({ sdp_answer: pc.localDescription })
+                });
+              } catch (e) {}
+            }
+          } else {
+            document.getElementById('lblWebRtcHandshakeState').textContent = 'TURN Relay Ready';
+            if (state.channel) {
+              state.channel.postMessage({ type: 'CALL_ANSWERED', token: pt.token, doctor_id: acct.doctor_id });
+            }
+          }
+        } catch (e) {}
+      }
+
+      function closeConsultationSession() {
+        if (state.sessionTimerInterval) {
+          clearInterval(state.sessionTimerInterval);
+          state.sessionTimerInterval = null;
+        }
+        if (state.localStream) {
+          state.localStream.getTracks().forEach(function (t) { t.stop(); });
+          state.localStream = null;
+        }
+        if (state.peerConn) {
+          try { state.peerConn.close(); } catch (e) {}
+          state.peerConn = null;
+        }
+        document.getElementById('overlayConsultSession').classList.add('hidden');
+      }
+
+      function renderQueue() {
+        const acct = getActiveAccount();
+        document.getElementById('lblQueueCount').textContent = String(acct.queue.length);
+        document.getElementById('lblHomeCount').textContent = String(acct.homeVisits.length);
+        const container = document.getElementById('queueListContainer');
+        container.innerHTML = '';
+
+        acct.queue.slice(0, 3).forEach(function (pt) {
+          const card = document.createElement('div');
+          card.className = 'static-sheet bg-white px-2.5 py-1.5 flex flex-col justify-between overflow-hidden';
+          card.innerHTML =
+            '<div class="flex items-center justify-between gap-1 leading-tight">' +
+              '<div class="flex items-center gap-1.5 min-w-0">' +
+                '<span class="text-[10px] font-black px-1.5 py-0.5 bg-slate-900 text-amber-300 shrink-0">' + pt.token + '</span>' +
+                '<span class="text-xs sm:text-sm font-black text-slate-900 truncate">' + pt.name + ' (' + pt.age + ')</span>' +
+              '</div>' +
+              '<span class="text-[10px] font-black text-emerald-900 bg-emerald-100 px-1.5 py-0.2 shrink-0">PAID UTR ' + (pt.utr || '4829') + '</span>' +
+            '</div>' +
+            '<div class="text-[11px] font-bold text-slate-700 bg-stone-100 px-2 py-0.5 border-l-2 border-slate-400 truncate my-0.5">' +
+              pt.complaint + ' • ' + pt.slot +
+            '</div>' +
+            '<div class="grid grid-cols-12 gap-1.5 pt-0.5">' +
+              '<button type="button" class="btn-ring-pt clickable-pill-outline col-span-4 py-1 text-[10px] font-black uppercase text-center">Ring</button>' +
+              '<button type="button" class="btn-call-pt clickable-pill-cta col-span-8 py-1 text-[10px] font-black uppercase text-center">Answer &amp; Rx ▸</button>' +
+            '</div>';
+
+          card.querySelector('.btn-ring-pt').addEventListener('click', function () {
+            triggerIncomingCallRing(pt, null, acct.dept_code);
+          });
+          card.querySelector('.btn-call-pt').addEventListener('click', function () {
+            openConsultationSession(pt);
+          });
+          container.appendChild(card);
+        });
+      }
+
+      function renderHomeVisits() {
+        const acct = getActiveAccount();
+        const container = document.getElementById('homeVisitListContainer');
+        container.innerHTML = '';
+
+        acct.homeVisits.forEach(function (hv) {
+          const card = document.createElement('div');
+          card.className = 'static-sheet bg-white px-3 py-2 flex flex-col justify-between overflow-hidden';
+          card.innerHTML =
+            '<div class="flex items-center justify-between gap-1 leading-tight">' +
+              '<div class="text-xs sm:text-sm font-black text-slate-900 truncate">' + hv.token + ' • ' + hv.name + ' (' + hv.age + ')</div>' +
+              '<span class="text-[10px] font-black text-amber-950 bg-amber-200 px-1.5 py-0.2 shrink-0">' + hv.slot + '</span>' +
+            '</div>' +
+            '<div class="text-[11px] font-bold text-slate-700 bg-stone-100 px-2 py-1 border-l-2 border-amber-600 truncate my-1">' +
+              hv.area + ' — ' + hv.note +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-2 pt-0.5">' +
+              '<button type="button" class="btn-notify-arrival ' + (hv.notified ? 'clickable-pill-amber' : 'clickable-pill-outline') + ' py-1.5 px-2 text-[10px] font-black uppercase">' +
+                (hv.notified ? 'Arrival Sent ✓' : 'Notify Arrival ▸') +
+              '</button>' +
+              '<button type="button" class="btn-home-rx clickable-pill-cta py-1.5 px-2 text-[10px] font-black uppercase">' +
+                'Write Rx ▸' +
+              '</button>' +
+            '</div>';
+
+          card.querySelector('.btn-notify-arrival').addEventListener('click', function () {
+            hv.notified = true;
+            renderHomeVisits();
+            showToast('Arrival Alert Sent');
+          });
+          card.querySelector('.btn-home-rx').addEventListener('click', function () {
+            openConsultationSession({ token: hv.token, name: hv.name, age: hv.age, mode: 'Home Visit', utr: '6012', paid: true, dept_code: acct.dept_code });
+          });
+          container.appendChild(card);
+        });
+      }
+
+      function renderLogs() {
+        const acct = getActiveAccount();
+        const p = state.logPeriod;
+        const s = acct.stats[p] || acct.stats.DAY;
+        document.getElementById('statPatientsSeen').textContent = String(s.patients);
+        document.getElementById('statRxDealt').textContent = String(s.rx);
+        document.getElementById('statModeSplit').textContent = s.split;
+        document.getElementById('statRevenue').textContent = s.rev;
+      }
+
+      function renderDraftRx() {
+        const list = document.getElementById('rxDraftList');
+        document.getElementById('lblRxCount').textContent = state.draftMeds.length + ' Drugs';
+        list.innerHTML = '';
+
+        state.draftMeds.slice(0, 2).forEach(function (m, idx) {
+          const row = document.createElement('div');
+          row.className = 'static-sheet bg-white px-2.5 py-1 flex items-center justify-between text-xs';
+          row.innerHTML =
+            '<div class="truncate mr-2">' +
+              '<span class="font-black text-slate-900">' + (idx + 1) + '. ' + m.nameEn + '</span> ' +
+              '<span class="text-slate-600 font-bold">(' + m.morn + '-' + m.noon + '-' + m.night + ')</span>' +
+            '</div>' +
+            '<button type="button" class="clickable-pill-outline px-2 py-0.2 font-black text-[9px] uppercase shrink-0">Del</button>';
+
+          row.querySelector('button').addEventListener('click', function () {
+            state.draftMeds.splice(idx, 1);
+            renderDraftRx();
+          });
+          list.appendChild(row);
+        });
+      }
+
+      function switchTab(tabName) {
+        state.activeTab = tabName;
+        const views = {
+          QUEUE: document.getElementById('viewQueue'),
+          HOME: document.getElementById('viewHomeVisits'),
+          LOGS: document.getElementById('viewLogs')
+        };
+        const tabs = {
+          QUEUE: document.getElementById('tabQueue'),
+          HOME: document.getElementById('tabHomeVisits'),
+          LOGS: document.getElementById('tabLogs')
+        };
+        Object.keys(views).forEach(function (k) {
+          if (k === tabName) {
+            views[k].classList.remove('hidden');
+            tabs[k].classList.add('clickable-arch-tab-active');
+          } else {
+            views[k].classList.add('hidden');
+            tabs[k].classList.remove('clickable-arch-tab-active');
+          }
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('inpDocTotp').value = computeLiveTotp(CONSULTANT_ACCOUNTS.doc_sivajith.totp_seed);
+        updateLockoutUI();
+
+        setInterval(function () {
+          const secsLeft = 30 - (Math.floor(Date.now() / 1000) % 30);
+          const el = document.getElementById('lblTotpCountdown');
+          if (el) el.textContent = 'Rotates in ' + secsLeft + 's';
+        }, 1000);
+
+        document.querySelectorAll('.demo-fill-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const docKey = btn.getAttribute('data-doc') || 'doc_sivajith';
+            const acct = CONSULTANT_ACCOUNTS[docKey];
+            if (!acct) return;
+            document.querySelectorAll('.demo-fill-btn').forEach(function (b) {
+              b.classList.toggle('clickable-tile-selected', b.getAttribute('data-doc') === docKey);
+            });
+            document.getElementById('inpDocEmail').value = acct.email;
+            document.getElementById('inpDocPassphrase').value = acct.passphrase;
+            document.getElementById('inpDocTotp').value = computeLiveTotp(acct.totp_seed);
+            const msgEl = document.getElementById('lblLockStatusMsg');
+            msgEl.textContent = 'Ready: ' + acct.name_en + ' (' + acct.dept_en + ' • ₹' + acct.base_fee + ')';
+            msgEl.className = 'text-[11px] font-bold text-emerald-900 bg-emerald-50 border-l-4 border-emerald-700 px-2.5 py-1.5';
+          });
+        });
+
+        document.getElementById('btnResetLockoutVault').addEventListener('click', function () {
+          saveLockoutState({ failed: 0, lockedUntil: 0 });
+          updateLockoutUI();
+          const msgEl = document.getElementById('lblLockStatusMsg');
+          msgEl.textContent = 'Lockout reset • 5 attempts available';
+          msgEl.className = 'text-[11px] font-bold text-emerald-900 bg-emerald-50 border-l-4 border-emerald-700 px-2.5 py-1.5';
+        });
+
+        document.getElementById('btnToggleShowPass').addEventListener('click', function (e) {
+          const inp = document.getElementById('inpDocPassphrase');
+          const isPassword = inp.type === 'password';
+          inp.type = isPassword ? 'text' : 'password';
+          e.currentTarget.textContent = isPassword ? 'Hide' : 'Show';
+        });
+
+        document.getElementById('btnUnlockConsole').addEventListener('click', function () {
+          unlockConsultantAccount();
+        });
+
+        document.getElementById('btnLockConsole').addEventListener('click', function () {
+          lockConsultantAccount();
+        });
+
+        document.getElementById('btnToggleMyDuty').addEventListener('click', function () {
+          toggleMyDutyPresence();
+        });
+
+        try {
+          state.channel = new BroadcastChannel('sivajith_clinic_channel');
+          state.channel.onmessage = function (ev) {
+            if (ev.data && ev.data.type === 'INCOMING_CALL' && ev.data.patient && ev.data.patient.paid) {
+              triggerIncomingCallRing(ev.data.patient, ev.data.sdpOffer, ev.data.dept);
+            }
+          };
+        } catch (e) {}
+
+        window.addEventListener('storage', function (ev) {
+          if (ev.key === 'sivajith_live_signal' && ev.newValue) {
+            try {
+              const data = JSON.parse(ev.newValue);
+              if (data && data.type === 'INCOMING_CALL' && data.patient && data.patient.paid) {
+                triggerIncomingCallRing(data.patient, data.sdpOffer, data.dept);
+              }
+            } catch (e) {}
+          }
+        });
+
+        document.getElementById('btnArmRinger').addEventListener('click', function () {
+          ensureAudioContext();
+          state.ringerArmed = !state.ringerArmed;
+          document.getElementById('btnArmRinger').textContent = state.ringerArmed ? 'Bell: ON' : 'Bell: OFF';
+          showToast(state.ringerArmed ? 'Ringer Armed' : 'Ringer Muted');
+        });
+
+        document.getElementById('btnInstallPwaPrompt').addEventListener('click', function () {
+          ensureAudioContext();
+          const acct = getActiveAccount();
+          triggerIncomingCallRing(acct.queue[0], null, acct.dept_code);
+        });
+
+        document.getElementById('tabQueue').addEventListener('click', function () { switchTab('QUEUE'); });
+        document.getElementById('tabHomeVisits').addEventListener('click', function () { switchTab('HOME'); });
+        document.getElementById('tabLogs').addEventListener('click', function () { switchTab('LOGS'); });
+
+        const periodNames = { DAY: 'Day', WEEK: 'Week', MONTH: 'Month' };
+        document.querySelectorAll('.log-period-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.logPeriod = btn.getAttribute('data-period') || 'DAY';
+            document.querySelectorAll('.log-period-btn').forEach(function (b) {
+              const p = b.getAttribute('data-period');
+              const isSel = p === state.logPeriod;
+              b.classList.toggle('clickable-tile-selected', isSel);
+              b.textContent = (isSel ? '◉ ' : '◯ ') + periodNames[p];
+            });
+            renderLogs();
+          });
+        });
+
+        document.getElementById('btnDeclineRing').addEventListener('click', function () {
+          stopRinging();
+          showToast('Call on Hold');
+        });
+        document.getElementById('btnAcceptRing').addEventListener('click', function () {
+          openConsultationSession(state.activePatient);
+        });
+
+        document.getElementById('btnSessionMute').addEventListener('click', function () {
+          state.micOn = !state.micOn;
+          document.getElementById('btnSessionMute').textContent = state.micOn ? 'Mic: ON' : 'Mic: MUTE';
+          if (state.localStream) {
+            state.localStream.getAudioTracks().forEach(function (t) { t.enabled = state.micOn; });
+          }
+        });
+        document.getElementById('btnSessionCam').addEventListener('click', function () {
+          state.camOn = !state.camOn;
+          document.getElementById('btnSessionCam').textContent = state.camOn ? 'Cam: ON' : 'Cam: OFF';
+          if (state.localStream) {
+            state.localStream.getVideoTracks().forEach(function (t) { t.enabled = state.camOn; });
+          }
+        });
+        document.getElementById('btnCloseSession').addEventListener('click', function () {
+          closeConsultationSession();
+        });
+
+        document.getElementById('toggleMorn').addEventListener('click', function (e) {
+          state.draftMorn = !state.draftMorn;
+          e.currentTarget.textContent = state.draftMorn ? '◉ M (1)' : '◯ M (0)';
+          e.currentTarget.classList.toggle('clickable-tile-selected', state.draftMorn);
+        });
+        document.getElementById('toggleNoon').addEventListener('click', function (e) {
+          state.draftNoon = !state.draftNoon;
+          e.currentTarget.textContent = state.draftNoon ? '◉ N (1)' : '◯ N (0)';
+          e.currentTarget.classList.toggle('clickable-tile-selected', state.draftNoon);
+        });
+        document.getElementById('toggleNight').addEventListener('click', function (e) {
+          state.draftNight = !state.draftNight;
+          e.currentTarget.textContent = state.draftNight ? '◉ E (1)' : '◯ E (0)';
+          e.currentTarget.classList.toggle('clickable-tile-selected', state.draftNight);
+        });
+        document.getElementById('toggleFood').addEventListener('click', function (e) {
+          state.draftAfterFood = !state.draftAfterFood;
+          e.currentTarget.textContent = state.draftAfterFood ? 'After' : 'Before';
+        });
+
+        document.getElementById('btnAddDrug').addEventListener('click', function () {
+          const nameInput = document.getElementById('inpDrugName');
+          const daysInput = document.getElementById('inpDrugDays');
+          const rawName = nameInput.value.trim() || 'Medicine';
+          const days = parseInt(daysInput.value, 10) || 3;
+          const mlName = malayalamDrugMap[rawName.toLowerCase()] || rawName;
+
+          state.draftMeds.unshift({
+            nameEn: rawName,
+            nameMl: mlName,
+            days: days,
+            morn: state.draftMorn ? 1 : 0,
+            noon: state.draftNoon ? 1 : 0,
+            night: state.draftNight ? 1 : 0,
+            foodMl: state.draftAfterFood ? 'ആഹാരശേഷം' : 'ആഹാരത്തിന് മുൻപ്',
+            foodEn: state.draftAfterFood ? 'After Food' : 'Before Food'
+          });
+          nameInput.value = '';
+          renderDraftRx();
+        });
+
+        document.getElementById('btnSignAndDispatchRx').addEventListener('click', async function () {
+          const acct = getActiveAccount();
+          acct.stats.DAY.patients += 1;
+          acct.stats.DAY.rx += 1;
+          acct.stats.DAY.rev = '₹' + (acct.stats.DAY.patients * acct.base_fee).toLocaleString('en-IN');
+          renderLogs();
+
+          try {
+            const raw = localStorage.getItem(D1_STORAGE_KEY);
+            const db = raw ? JSON.parse(raw) : null;
+            if (db && Array.isArray(db.consultants)) {
+              const c = db.consultants.find(function (row) { return row.doctor_id === acct.doctor_id; });
+              if (c) {
+                c.patients_seen_day = (c.patients_seen_day || 0) + 1;
+                c.rx_count_day = (c.rx_count_day || 0) + 1;
+              }
+              localStorage.setItem(D1_STORAGE_KEY, JSON.stringify(db));
+            }
+          } catch (e) {}
+
+          const headingMl = acct.dept_ml + ' • ' + acct.name_ml;
+          const rxPayload = {
+            type: 'RX_ISSUED',
+            dept: acct.dept_code,
+            doctor_id: acct.doctor_id,
+            headingMl: headingMl,
+            token: state.activePatient ? state.activePatient.token : '#9042',
+            meds: state.draftMeds
+          };
+          if (state.channel) state.channel.postMessage(rxPayload);
+          try {
+            localStorage.setItem('sivajith_latest_rx', JSON.stringify(rxPayload));
+          } catch (e) {}
+
+          if (state.sessionToken) {
+            try {
+              await callWorkerApi('/api/prescriptions/sign', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + state.sessionToken
+                },
+                body: JSON.stringify({
+                  call_id: state.activePatient ? state.activePatient.call_id : null,
+                  patient_token: state.activePatient ? state.activePatient.token : '9042',
+                  meds: state.draftMeds
+                })
+              });
+            } catch (e) {}
+          }
+
+          closeConsultationSession();
+          showToast('Rx Signed by ' + acct.name_en + ' & Sent');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

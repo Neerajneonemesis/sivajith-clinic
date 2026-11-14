@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>ഡോ. ശിവജിത്ത് ക്ലിനിക്ക് | Patient Portal</title>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"Dr. Sivajith Clinic","short_name":"Clinic","start_url":".","display":"standalone","background_color":"#EAE4D7","theme_color":"#0F172A"}'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <style>
+    :root {
+      --font-scale: 1;
+      --paper-bg: #EAE4D7;
+      --ink-dark: #0F172A;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      font-size: calc(16px * var(--font-scale));
+    }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: var(--paper-bg);
+      color: var(--ink-dark);
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Inter', sans-serif;
+      line-height: 1.35;
+      user-select: none;
+    }
+
+    .app-shell {
+      height: 100dvh;
+      max-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .ml-heavy {
+      font-family: 'Noto Sans Malayalam', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .ml-soft {
+      font-family: 'Manjari', 'Noto Sans Malayalam', sans-serif;
+      font-weight: 700;
+      line-height: 1.32;
+    }
+
+    .clickable-pill-cta {
+      border-radius: 9999px;
+      border: 2px solid #022C22;
+      border-bottom-width: 4.5px;
+      background-color: #065F46;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-cta:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-amber {
+      border-radius: 9999px;
+      border: 2px solid #451A03;
+      border-bottom-width: 4.5px;
+      background-color: #D97706;
+      color: #FFFFFF;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-amber:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-outline {
+      border-radius: 9999px;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4px;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      white-space: nowrap;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease;
+      cursor: pointer;
+    }
+
+    .clickable-pill-outline:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-pill-locked {
+      border-radius: 9999px;
+      border: 2px dashed #64748B;
+      background-color: #CBD5E1;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    .clickable-tile {
+      background-color: #FFFFFF;
+      color: #0F172A;
+      border: 2px solid #0F172A;
+      border-bottom-width: 4.5px;
+      border-radius: 14px 3px 14px 14px;
+      transition: transform 0.08s ease, border-bottom-width 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-tile:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .clickable-tile-selected {
+      background-color: #0F172A !important;
+      color: #F8FAFC !important;
+      border: 2px solid #94A3B8 !important;
+      border-bottom-width: 4.5px !important;
+      border-bottom-color: #F59E0B !important;
+      border-radius: 3px 14px 3px 14px !important;
+    }
+
+    .clickable-arch-tab {
+      border-radius: 12px 12px 0 0;
+      border: 2px solid #64748B;
+      border-bottom: none;
+      background-color: #CBD5E1;
+      color: #334155;
+      margin-top: 3px;
+      font-weight: 900;
+      transition: all 0.12s ease;
+      cursor: pointer;
+    }
+
+    .clickable-arch-tab-active {
+      border-radius: 14px 14px 0 0;
+      border: 2px solid #0F172A;
+      border-bottom: none;
+      background-color: var(--paper-bg);
+      color: #0F172A;
+      margin-top: 0;
+      padding-bottom: 2px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .static-sheet {
+      background-color: #F8F6F0;
+      border: 1.5px solid #CBD5E1;
+      border-left: 5px solid #1E293B;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .recessed-input {
+      background-color: #FFFFFF;
+      border: 2px solid #334155;
+      border-left-width: 6px;
+      border-left-color: #065F46;
+      border-radius: 3px 8px 8px 3px;
+      box-shadow: inset 0 2px 3px rgba(15, 23, 42, 0.08);
+      color: #0F172A;
+      font-weight: 800;
+    }
+
+    .recessed-input:focus {
+      outline: none;
+      border-color: #065F46;
+      background-color: #F0FDF4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- PATIENT PORTAL ONLY (INDEX.HTML — ENLARGED TEXT & STEP DIRECTIONS)     -->
+  <!-- ===================================================================== -->
+  <div id="portalPatient" class="app-shell max-w-md mx-auto w-full">
+
+    <!-- ROW 1: PATIENT HEADER + TOP ARCH TABS -->
+    <header class="bg-[#1E293B] text-white shrink-0 px-2.5 pt-2 pb-0 border-b-2 border-[#0F172A]">
+      <div class="flex items-center justify-between gap-2 pb-1.5 pl-14 sm:pl-0">
+        <button id="btnBrandHome" type="button" class="text-left focus:outline-none min-w-0">
+          <div class="text-base sm:text-lg ml-heavy tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+            <span>ഡോ. ശിവജിത്ത് ക്ലിനിക്ക്</span>
+          </div>
+          <div class="text-xs text-slate-200 ml-soft whitespace-nowrap mt-0.5">
+            രോഗി: <span id="lblHeaderPatientName" class="text-amber-300 font-bold">രാധാകൃഷ്ണൻ (68)</span> • #<span id="lblHeaderToken">9042</span>
+          </div>
+        </button>
+
+        <button id="btnFontSize" type="button" class="clickable-pill-outline px-3 py-1 text-xs ml-heavy shrink-0">
+          <span id="lblFontSize">വലുപ്പം</span>
+        </button>
+      </div>
+
+      <!-- 3 Top Arch Tabs (Left to Right: ബുക്കിംഗ് | കുറിപ്പടി | അക്കൗണ്ട്) -->
+      <nav aria-label="വിഭാഗങ്ങൾ" class="grid grid-cols-3 gap-1.5 text-center pt-0.5 border-t border-slate-700">
+        <button id="tabBooking" type="button" class="clickable-arch-tab clickable-arch-tab-active py-2 text-sm sm:text-base ml-heavy">
+          ബുക്കിംഗ്
+        </button>
+        <button id="tabPrescriptions" type="button" class="clickable-arch-tab py-2 text-sm sm:text-base ml-heavy">
+          കുറിപ്പടി
+        </button>
+        <button id="tabAccount" type="button" class="clickable-arch-tab py-2 text-sm sm:text-base ml-heavy">
+          അക്കൗണ്ട്
+        </button>
+      </nav>
+    </header>
+
+    <!-- ROW 2: PATIENT ZERO-SCROLL VIEWPORT STAGE -->
+    <main class="flex-1 w-full px-2.5 py-2 flex flex-col justify-between overflow-hidden relative">
+
+      <!-- Toast Banner -->
+      <div id="toastBanner" class="hidden absolute top-2 inset-x-2.5 z-30 py-2.5 px-4 rounded-full bg-[#0F172A] text-white border-2 border-amber-400 text-sm ml-heavy shadow-xl flex items-center justify-between">
+        <span id="toastText">വിവരം</span>
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 1: BOOKING (ENLARGED TEXT, DIRECTIONS & ONLINE DOCTORS)      -->
+      <!-- =============================================================== -->
+      <section id="viewBooking" class="h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <!-- STEP 1A: 3 CHOICES + CLEAR MALAYALAM DIRECTIONS -->
+        <div id="stepChoices" class="h-full flex flex-col justify-between gap-1.5">
+
+          <!-- Direction Banner with Default Total Online Doctors -->
+          <div class="static-sheet px-3 py-2 shrink-0 bg-slate-900 text-white border-l-amber-400">
+            <div class="flex items-center justify-between gap-2">
+              <h1 class="text-sm sm:text-base ml-heavy text-white">1. പരിശോധന വിഭാഗം തിരഞ്ഞെടുക്കുക</h1>
+              <span id="lblTotalOnlineHeader" class="text-xs ml-heavy text-emerald-300 whitespace-nowrap">● 4 ഡോക്ടർമാർ ഓൺലൈൻ</span>
+            </div>
+            <div class="text-xs ml-soft text-amber-200 mt-0.5">
+              നിർദ്ദേശം: താഴെ കാണുന്ന വിഭാഗത്തിൽ തൊട്ട് ഫീസ് അടച്ചാൽ ഉടൻ വീഡിയോ കോൾ തുടങ്ങാം.
+            </div>
+          </div>
+
+          <!-- 3 Enlarged Tactile Cut-Corner Department Cards -->
+          <div class="flex-1 grid grid-rows-3 gap-1.5 my-auto min-h-0">
+
+            <!-- 1. General: 250 + 20 -->
+            <button id="choiceGeneral" type="button" class="clickable-tile px-3.5 py-2.5 flex flex-col justify-between text-left w-full overflow-hidden">
+              <div class="flex items-start justify-between gap-2 w-full">
+                <div class="min-w-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">ജനറൽ (General)</div>
+                  <div class="text-xs sm:text-sm ml-soft text-slate-700 mt-0.5">പനി, ചുമ, ജലദോഷം, സാധാരണ പരിശോധനകൾ</div>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">₹250</div>
+                  <div class="text-xs ml-soft text-slate-600">+ ₹20 ഫീസ്</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-2 w-full pt-1.5 border-t border-slate-200">
+                <span id="badgeGeneralOnline" class="px-2.5 py-1 bg-emerald-100 border border-emerald-700 text-emerald-950 text-xs ml-heavy whitespace-nowrap">
+                  ● 2 ഓൺലൈൻ
+                </span>
+                <span class="px-3.5 py-1 rounded-full bg-emerald-800 text-white text-xs sm:text-sm ml-heavy whitespace-nowrap">
+                  തിരഞ്ഞെടുക്കുക ▸
+                </span>
+              </div>
+            </button>
+
+            <!-- 2. Medicine: 350 + 20 -->
+            <button id="choiceMedicine" type="button" class="clickable-tile px-3.5 py-2.5 flex flex-col justify-between text-left w-full overflow-hidden">
+              <div class="flex items-start justify-between gap-2 w-full">
+                <div class="min-w-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">മെഡിസിൻ (Medicine)</div>
+                  <div class="text-xs sm:text-sm ml-soft text-slate-700 mt-0.5">പ്രഷർ, ഷുഗർ, തൈറോയ്ഡ്, വിദഗ്ദ്ധ പരിശോധന</div>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">₹350</div>
+                  <div class="text-xs ml-soft text-slate-600">+ ₹20 ഫീസ്</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-2 w-full pt-1.5 border-t border-slate-200">
+                <span id="badgeMedicineOnline" class="px-2.5 py-1 bg-emerald-100 border border-emerald-700 text-emerald-950 text-xs ml-heavy whitespace-nowrap">
+                  ● 1 ഓൺലൈൻ
+                </span>
+                <span class="px-3.5 py-1 rounded-full bg-emerald-800 text-white text-xs sm:text-sm ml-heavy whitespace-nowrap">
+                  തിരഞ്ഞെടുക്കുക ▸
+                </span>
+              </div>
+            </button>
+
+            <!-- 3. Surgery: 350 + 20 -->
+            <button id="choiceSurgery" type="button" class="clickable-tile px-3.5 py-2.5 flex flex-col justify-between text-left w-full overflow-hidden">
+              <div class="flex items-start justify-between gap-2 w-full">
+                <div class="min-w-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">സർജറി (Surgery)</div>
+                  <div class="text-xs sm:text-sm ml-soft text-slate-700 mt-0.5">മുറിവുകൾ, തുന്നൽ, ശസ്ത്രക്രിയ തുടർപരിശോധന</div>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xl sm:text-2xl ml-heavy text-slate-900 leading-tight">₹350</div>
+                  <div class="text-xs ml-soft text-slate-600">+ ₹20 ഫീസ്</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-2 w-full pt-1.5 border-t border-slate-200">
+                <span id="badgeSurgeryOnline" class="px-2.5 py-1 bg-emerald-100 border border-emerald-700 text-emerald-950 text-xs ml-heavy whitespace-nowrap">
+                  ● 1 ഓൺലൈൻ
+                </span>
+                <span class="px-3.5 py-1 rounded-full bg-emerald-800 text-white text-xs sm:text-sm ml-heavy whitespace-nowrap">
+                  തിരഞ്ഞെടുക്കുക ▸
+                </span>
+              </div>
+            </button>
+
+          </div>
+
+          <!-- Bottom Payment-Gated Call Request Bar -->
+          <div class="static-sheet px-3 py-2 shrink-0 flex items-center justify-between gap-2 bg-white">
+            <div class="min-w-0">
+              <div id="lblBookedSummary" class="text-xs sm:text-sm ml-heavy text-slate-900">വിഭാഗം തിരഞ്ഞെടുക്കുക</div>
+              <div id="lblPaymentStatusChip" class="text-xs ml-soft text-slate-600">ഫീസ് അടച്ച ശേഷം കോൾ</div>
+            </div>
+            <button id="btnStartCallOverlay" type="button" class="clickable-pill-locked px-3.5 py-2 text-xs sm:text-sm ml-heavy shrink-0">
+              <span id="lblCallActionText">ഫീസ് അടയ്ക്കുക ▸</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- STEP 1B: PAYMENT & CALL REQUEST CONFIRMATION (ENLARGED + STEP DIRECTIONS) -->
+        <div id="stepSlotConfirm" class="hidden h-full flex flex-col justify-between gap-1.5">
+
+          <div class="flex items-center justify-between shrink-0">
+            <button id="btnBackToChoices" type="button" class="clickable-pill-outline py-1.5 px-4 text-xs sm:text-sm ml-heavy">
+              ◂ മടങ്ങുക
+            </button>
+            <div id="lblSelectedDeptPrice" class="static-sheet px-3 py-1.5 text-sm ml-heavy text-slate-900 bg-white">
+              ജനറൽ • ₹270
+            </div>
+          </div>
+
+          <!-- Mode Selection -->
+          <div class="static-sheet p-2.5 bg-white shrink-0 space-y-1.5">
+            <div class="text-xs sm:text-sm ml-heavy text-slate-800">1. പരിശോധന രീതി തിരഞ്ഞെടുക്കുക</div>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="modeOnlineBtn" type="button" class="clickable-tile clickable-tile-selected py-2.5 px-2 text-center text-sm sm:text-base ml-heavy">
+                ◉ ഫോണിലൂടെ
+              </button>
+              <button id="modeHomeBtn" type="button" class="clickable-tile py-2.5 px-2 text-center text-sm sm:text-base ml-heavy">
+                ◯ വീട്ടിലേക്ക്
+              </button>
+            </div>
+          </div>
+
+          <!-- Time of Day Selection -->
+          <div class="static-sheet p-2.5 bg-white shrink-0 space-y-1.5">
+            <div class="text-xs sm:text-sm ml-heavy text-slate-800">2. സൗകര്യപ്രദമായ സമയം</div>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" data-time="രാവിലെ" class="time-slot-btn clickable-tile clickable-tile-selected py-2.5 px-1 text-center text-sm ml-heavy">
+                ◉ രാവിലെ
+              </button>
+              <button type="button" data-time="ഉച്ചയ്ക്ക്" class="time-slot-btn clickable-tile py-2.5 px-1 text-center text-sm ml-heavy">
+                ◯ ഉച്ചയ്ക്ക്
+              </button>
+              <button type="button" data-time="വൈകിട്ട്" class="time-slot-btn clickable-tile py-2.5 px-1 text-center text-sm ml-heavy">
+                ◯ വൈകിട്ട്
+              </button>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Direction Guide + UPI Payment Box (Fills Middle Space Usefully) -->
+          <div class="static-sheet p-3 space-y-2 my-auto bg-white">
+            <div class="bg-stone-100 border-l-4 border-amber-600 px-2.5 py-1.5 space-y-0.5">
+              <div class="text-xs ml-heavy text-slate-900">3. ഫീസ് അടച്ച് കോൾ തുടങ്ങേണ്ട വിധം:</div>
+              <div class="text-xs ml-soft text-slate-700">• <b>യുപിഐ ആപ്പ് ▸</b> അമർത്തി തുക അടയ്ക്കുക.</div>
+              <div class="text-xs ml-soft text-slate-700">• രസീതിലെ അവസാന 4 അക്ക നമ്പർ (UTR) വലതുവശത്ത് കാണാം.</div>
+            </div>
+
+            <div class="flex items-center justify-between border-b border-slate-200 pb-1">
+              <span class="text-sm ml-heavy text-slate-800">ആകെ അടയ്ക്കേണ്ട തുക</span>
+              <span id="lblTotalPayable" class="text-base sm:text-lg ml-heavy text-emerald-950">₹250 + ₹20 = ₹270</span>
+            </div>
+
+            <div class="grid grid-cols-12 gap-2 items-center">
+              <button id="btnLaunchUpiApp" type="button" class="clickable-pill-amber col-span-7 py-2.5 px-2 text-xs sm:text-sm ml-heavy text-center">
+                യുപിഐ ആപ്പ് ▸
+              </button>
+              <input id="inpUtrCode" type="tel" maxlength="4" value="4829" placeholder="UTR" class="recessed-input col-span-5 px-2 py-2 text-base text-center">
+            </div>
+
+            <div id="lblUpiHelper" class="text-xs ml-soft text-emerald-800 text-center">
+              യുപിഐ നമ്പർ: <span id="lblCurrentUtr" class="font-black">4829</span> • കോളിന് തയ്യാറാണ്
+            </div>
+          </div>
+
+          <!-- Confirm Payment & Ring Consultant Button -->
+          <button id="btnConfirmAppointment" type="button" class="clickable-pill-cta w-full py-3.5 px-4 text-base sm:text-lg ml-heavy flex items-center justify-between shrink-0">
+            <span>പണമടച്ചു • ഡോക്ടറെ വിളിക്കുക</span>
+            <span class="px-3 py-0.5 rounded-full bg-white text-emerald-950 text-xs">▸</span>
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 2: PRESCRIPTIONS (ENLARGED DOSAGES & CLEAR DIRECTIONS)      -->
+      <!-- =============================================================== -->
+      <section id="viewPrescriptions" class="hidden h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <div class="grid grid-cols-3 gap-1.5 shrink-0">
+          <button type="button" data-rx="RX1" class="rx-history-btn clickable-tile clickable-tile-selected py-2 text-center text-xs sm:text-sm ml-heavy">
+            ◉ ഇന്ന്
+          </button>
+          <button type="button" data-rx="RX2" class="rx-history-btn clickable-tile py-2 text-center text-xs sm:text-sm ml-heavy">
+            ◯ കഴിഞ്ഞ മാസം
+          </button>
+          <button type="button" data-rx="RX3" class="rx-history-btn clickable-tile py-2 text-center text-xs sm:text-sm ml-heavy">
+            ◯ ആഗസ്റ്റ്
+          </button>
+        </div>
+
+        <div class="static-sheet px-3 py-2 flex items-center justify-between shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <div class="min-w-0 pr-2">
+            <div id="rxDeptHeading" class="text-sm sm:text-base ml-heavy text-white">ജനറൽ • ഡോ. ശിവജിത്ത്</div>
+            <div class="text-xs ml-soft text-amber-300">കുറിപ്പടി നമ്പർ: 48291 • ടോക്കൺ: #<span id="rxTokenDisplay">9042</span></div>
+          </div>
+          <button id="btnPrintRx" type="button" class="clickable-pill-outline px-3 py-1 text-xs ml-heavy shrink-0">
+            ഡൗൺലോഡ് ▸
+          </button>
+        </div>
+
+        <div id="rxMedicinesContainer" class="flex-1 grid grid-rows-2 gap-2 my-auto min-h-0">
+          <!-- Rendered by JS with enlarged dosage boxes and clear directions -->
+        </div>
+
+        <div class="shrink-0">
+          <button id="btnOrderPharmacy" type="button" class="clickable-pill-cta w-full py-3 px-4 text-sm sm:text-base ml-heavy flex items-center justify-between">
+            <span id="lblPharmacyBtn">മരുന്ന് വീട്ടിലെത്തിക്കുക (ഫാർമസി ഓർഡർ)</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-white text-emerald-950 text-xs">▸</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- TAB 3: PATIENT REGISTRATION (ENLARGED INPUTS + SYMPTOM CHIPS)   -->
+      <!-- =============================================================== -->
+      <section id="viewAccount" class="hidden h-full flex flex-col justify-between gap-1.5 overflow-hidden">
+
+        <div class="static-sheet px-3 py-2 shrink-0 bg-slate-900 text-white border-l-amber-400">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm sm:text-base ml-heavy text-white">വ്യക്തിഗത വിവരങ്ങൾ (രജിസ്ട്രേഷൻ)</h2>
+            <span id="lblAccountSavedBadge" class="text-xs ml-heavy text-amber-300">സേവ് ചെയ്തിട്ടുണ്ട് ✓</span>
+          </div>
+          <div class="text-xs ml-soft text-slate-300 mt-0.5">
+            നിങ്ങളുടെ ഫോൺ നമ്പർ സ്വകാര്യമാണ് • ഡോക്ടർക്ക് ടോക്കൺ നമ്പർ മാത്രമേ കാണാനാകൂ.
+          </div>
+        </div>
+
+        <!-- Single Unified Registration Card (Zero Floating Gaps) -->
+        <div class="static-sheet bg-white p-3.5 flex-1 flex flex-col justify-between my-auto min-h-0">
+          <div>
+            <label for="inpName" class="block text-sm ml-heavy text-slate-900 mb-1">1. രോഗിയുടെ പേര്</label>
+            <input id="inpName" type="text" value="രാധാകൃഷ്ണൻ നായർ" placeholder="പേര് നൽകുക" class="recessed-input w-full px-3 py-2 text-base">
+          </div>
+
+          <div class="grid grid-cols-12 gap-2.5">
+            <div class="col-span-4">
+              <label for="inpAge" class="block text-sm ml-heavy text-slate-900 mb-1">2. വയസ്സ്</label>
+              <input id="inpAge" type="number" value="68" placeholder="വയസ്സ്" class="recessed-input w-full px-2.5 py-2 text-base text-center">
+            </div>
+            <div class="col-span-8">
+              <label for="inpPhone" class="block text-sm ml-heavy text-slate-900 mb-1">3. ഫോൺ നമ്പർ</label>
+              <input id="inpPhone" type="tel" value="9847012345" placeholder="നമ്പർ" class="recessed-input w-full px-3 py-2 text-base">
+            </div>
+          </div>
+
+          <div>
+            <label for="inpPlace" class="block text-sm ml-heavy text-slate-900 mb-1">4. സ്ഥലം / വീട്ടുപേര്</label>
+            <input id="inpPlace" type="text" value="പട്ടം, തിരുവനന്തപുരം" placeholder="സ്ഥലം" class="recessed-input w-full px-3 py-2 text-base">
+          </div>
+
+          <div class="pt-1 border-t border-slate-200">
+            <div class="text-xs sm:text-sm ml-heavy text-slate-900 mb-1.5">5. പ്രധാന ബുദ്ധിമുട്ട്</div>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" data-sym="പനി / ചുമ" class="sym-chip-btn clickable-tile clickable-tile-selected py-2 px-2 text-xs sm:text-sm ml-heavy text-center">
+                ◉ പനി / ചുമ
+              </button>
+              <button type="button" data-sym="പ്രഷർ / ഷുഗർ" class="sym-chip-btn clickable-tile py-2 px-2 text-xs sm:text-sm ml-heavy text-center">
+                ◯ പ്രഷർ / ഷുഗർ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button id="btnSaveAccount" type="button" class="clickable-pill-cta w-full py-3 px-4 text-base ml-heavy flex items-center justify-between shrink-0">
+          <span>രജിസ്ട്രേഷൻ സേവ് ചെയ്ത് തുടരുക</span>
+          <span class="px-2.5 py-0.5 rounded-full bg-white text-emerald-950 text-xs">▸</span>
+        </button>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- PATIENT LIVE WEBRTC VIDEO CALL SCREEN (PATIENT CONTROLS ONLY)         -->
+  <!-- ===================================================================== -->
+  <section id="overlayVideoCall" class="hidden fixed inset-0 z-40 bg-slate-950 text-white flex flex-col justify-between p-4">
+
+    <div class="max-w-md w-full mx-auto flex items-center justify-between border-b border-slate-800 pb-2 pl-14 sm:pl-0 shrink-0">
+      <div>
+        <div id="callDoctorHeader" class="text-base sm:text-lg ml-heavy text-white">ഡോ. ശിവജിത്ത് (ജനറൽ)</div>
+        <div id="callStatusSub" class="text-xs ml-soft text-emerald-400">പണമടച്ചു (UTR: 4829) • ടോക്കൺ 9042</div>
+      </div>
+      <div id="callTimer" class="text-xs font-black text-white border border-slate-600 px-2.5 py-1">00:01</div>
+    </div>
+
+    <div class="max-w-md w-full mx-auto flex-1 my-2.5 border-2 border-slate-700 bg-slate-900 relative flex flex-col items-center justify-center p-4 text-center overflow-hidden">
+      <video id="remoteVideoEl" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
+      <div id="remotePlaceholder" class="z-10 space-y-2">
+        <div id="callRemoteDeptTitle" class="text-xl ml-heavy text-white">ഡോക്ടറെ വിളിക്കുന്നു...</div>
+        <div id="callSignalStateText" class="text-sm ml-soft text-amber-300">ഡോക്ടറുടെ ഫോൺ റിംഗ് ചെയ്യുന്നു</div>
+        <div class="text-xs ml-soft text-slate-300 max-w-xs mx-auto pt-2">
+          നിർദ്ദേശം: ഡോക്ടർ കോൾ എടുക്കുമ്പോൾ വീഡിയോ തനിയെ തെളിയും. പരിശോധനയ്ക്ക് ശേഷം കുറിപ്പടി 'കുറിപ്പടി' വിഭാഗത്തിൽ ലഭിക്കും.
+        </div>
+      </div>
+
+      <div class="absolute bottom-2.5 right-2.5 w-24 h-32 border-2 border-white bg-black overflow-hidden flex items-center justify-center z-20">
+        <video id="localVideoEl" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
+        <span id="lblCamState" class="text-xs ml-heavy text-white">ക്യാമറ</span>
+      </div>
+    </div>
+
+    <div class="max-w-md w-full mx-auto grid grid-cols-3 gap-2 shrink-0">
+      <button id="btnToggleMic" type="button" class="clickable-pill-outline py-3 px-2 text-xs sm:text-sm ml-heavy text-center">
+        <span id="lblMic">ശബ്ദം: ഓൺ</span>
+      </button>
+      <button id="btnToggleCam" type="button" class="clickable-pill-outline py-3 px-2 text-xs sm:text-sm ml-heavy text-center">
+        <span id="lblCam">ക്യാമറ: ഓൺ</span>
+      </button>
+      <button id="btnEndCall" type="button" class="rounded-full border-2 border-red-950 bg-red-600 text-white py-3 px-2 text-xs sm:text-sm ml-heavy text-center">
+        നിർത്തുക
+      </button>
+    </div>
+
+  </section>
+
+  <script>
+    (function () {
+      async function callWorkerApi(endpoint, options) {
+        const base = window.CLINIC_WORKER_ORIGIN || '';
+        return await fetch(base + endpoint, options || {});
+      }
+
+      const D1_STORAGE_KEY = 'sivajith_d1_sqlite_tables_v1';
+
+      const state = {
+        fontScaleIndex: 0,
+        fontScales: [
+          { scale: 1, label: 'വലുപ്പം' },
+          { scale: 1.07, label: 'വലുത്' },
+          { scale: 1.14, label: 'വളരെ വലുത്' }
+        ],
+        activeTab: 'BOOKING',
+        selectedDept: 'ജനറൽ',
+        selectedDeptCode: 'GENERAL',
+        selectedFee: 250,
+        platformFee: 20,
+        consultMode: 'ഫോണിലൂടെ',
+        selectedTime: 'രാവിലെ',
+        selectedSymptom: 'പനി / ചുമ',
+        paymentConfirmed: false,
+        utrNumber: '4829',
+        patientToken: '9042',
+        patientName: 'രാധാകൃഷ്ണൻ നായർ',
+        patientAge: '68',
+        patientPhone: '9847012345',
+        patientPlace: 'പട്ടം, തിരുവനന്തപുരം',
+        selectedRxKey: 'RX1',
+        activeCallId: null,
+        pollTimer: null,
+        pcPatient: null,
+        localStream: null,
+        channel: null,
+        callSecs: 1,
+        callInterval: null,
+        micOn: true,
+        camOn: true
+      };
+
+      const prescriptionsData = {
+        RX1: {
+          heading: 'ജനറൽ • ഡോ. ശിവജിത്ത്',
+          meds: [
+            { name: 'പാരസെറ്റമോൾ 650 (Paracetamol)', days: '3 ദിവസം', morn: 'രാവിലെ 1', noon: 'ഉച്ചയ്ക്ക് 1', night: 'രാത്രി 1', food: 'ആഹാരശേഷം കഴിക്കുക • ചെറുചൂടുവെള്ളത്തിൽ (പനി/വേദനയ്ക്ക്)' },
+            { name: 'അംലോഡിപ്പിൻ 5 (Amlodipine)', days: '30 ദിവസം', morn: 'രാവിലെ 1', noon: 'ഇല്ല', night: 'ഇല്ല', food: 'രാവിലെ ആഹാരശേഷം മുടങ്ങാതെ കഴിക്കുക (പ്രഷറിന്)' }
+          ]
+        },
+        RX2: {
+          heading: 'മെഡിസിൻ • ഡോ. മീര',
+          meds: [
+            { name: 'മെറ്റ്ഫോർമിൻ 500 (Metformin)', days: '30 ദിവസം', morn: 'രാവിലെ 1', noon: 'ഇല്ല', night: 'രാത്രി 1', food: 'ആഹാരത്തിന് 15 മിനിറ്റ് മുൻപ് കഴിക്കുക (ഷുഗറിന്)' },
+            { name: 'വൈറ്റമിൻ ഡി3 (Vitamin D3)', days: '4 ആഴ്ച', morn: 'ഞായർ 1', noon: 'ഇല്ല', night: 'ഇല്ല', food: 'ഞായറാഴ്ച ഉച്ചഭക്ഷണത്തിന് ശേഷം പാലോടൊപ്പം' }
+          ]
+        },
+        RX3: {
+          heading: 'സർജറി • ഡോ. അരുൺ',
+          meds: [
+            { name: 'പാന്റോപ്രസോൾ 40 (Pantoprazole)', days: '10 ദിവസം', morn: 'രാവിലെ 1', noon: 'ഇല്ല', night: 'ഇല്ല', food: 'രാവിലെ വെറുംവയറ്റിൽ (ഭക്ഷണത്തിന് 30 മിനിറ്റ് മുൻപ്)' },
+            { name: 'സെഫിക്സിം 200 (Cefixime)', days: '5 ദിവസം', morn: 'രാവിലെ 1', noon: 'ഇല്ല', night: 'രാത്രി 1', food: 'ആഹാരശേഷം കൃത്യസമയത്ത് 5 ദിവസം പൂർത്തിയാക്കുക' }
+          ]
+        }
+      };
+
+      function getDefaultD1Tables() {
+        return {
+          patients: [
+            { token: '9042', name: 'രാധാകൃഷ്ണൻ നായർ', age: 68, phone: '9847012345', place: 'പട്ടം, തിരുവനന്തപുരം', symptom_note: 'പനി / ചുമ' }
+          ],
+          consultants: [
+            { doctor_id: 'doc_sivajith', login_email: 'sivajith@clinic.in', name_en: 'Dr. Sivajith', name_ml: 'ഡോ. ശിവജിത്ത്', dept_code: 'GENERAL', dept_ml: 'ജനറൽ', base_fee: 250, is_online: 1, patients_seen_day: 14, rx_count_day: 12 },
+            { doctor_id: 'doc_krishnan', login_email: 'krishnan@clinic.in', name_en: 'Dr. Krishnan', name_ml: 'ഡോ. കൃഷ്ണൻ', dept_code: 'GENERAL', dept_ml: 'ജനറൽ', base_fee: 250, is_online: 1, patients_seen_day: 9, rx_count_day: 8 },
+            { doctor_id: 'doc_meera', login_email: 'meera@clinic.in', name_en: 'Dr. Meera', name_ml: 'ഡോ. മീര', dept_code: 'MEDICINE', dept_ml: 'മെഡിസിൻ', base_fee: 350, is_online: 1, patients_seen_day: 15, rx_count_day: 14 },
+            { doctor_id: 'doc_arun', login_email: 'arun@clinic.in', name_en: 'Dr. Arun', name_ml: 'ഡോ. അരുൺ', dept_code: 'SURGERY', dept_ml: 'സർജറി', base_fee: 350, is_online: 1, patients_seen_day: 9, rx_count_day: 8 }
+          ],
+          calls: [],
+          prescriptions: []
+        };
+      }
+
+      function loadD1Tables() {
+        try {
+          const raw = localStorage.getItem(D1_STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.consultants)) return parsed;
+          }
+        } catch (e) {}
+        const def = getDefaultD1Tables();
+        saveD1Tables(def);
+        return def;
+      }
+
+      function saveD1Tables(db) {
+        try {
+          localStorage.setItem(D1_STORAGE_KEY, JSON.stringify(db));
+        } catch (e) {}
+      }
+
+      async function refreshOnlineDoctorCounts() {
+        try {
+          const res = await callWorkerApi('/api/presence');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.ok && data.counts) {
+              applyOnlineCounts(data.counts);
+              return;
+            }
+          }
+        } catch (e) {}
+
+        const db = loadD1Tables();
+        const counts = { GENERAL: 0, MEDICINE: 0, SURGERY: 0, TOTAL: 0 };
+        db.consultants.forEach(function (c) {
+          if (c.is_online) {
+            counts[c.dept_code] = (counts[c.dept_code] || 0) + 1;
+            counts.TOTAL += 1;
+          }
+        });
+        applyOnlineCounts(counts);
+      }
+
+      function applyOnlineCounts(counts) {
+        document.getElementById('badgeGeneralOnline').textContent = '● ' + (counts.GENERAL || 0) + ' ഓൺലൈൻ';
+        document.getElementById('badgeMedicineOnline').textContent = '● ' + (counts.MEDICINE || 0) + ' ഓൺലൈൻ';
+        document.getElementById('badgeSurgeryOnline').textContent = '● ' + (counts.SURGERY || 0) + ' ഓൺലൈൻ';
+        document.getElementById('lblTotalOnlineHeader').textContent = '● ' + (counts.TOTAL || 0) + ' ഡോക്ടർമാർ ഓൺലൈൻ';
+      }
+
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        const text = document.getElementById('toastText');
+        if (!banner || !text) return;
+        text.textContent = msg;
+        banner.classList.remove('hidden');
+        setTimeout(function () { banner.classList.add('hidden'); }, 2200);
+      }
+
+      function switchTab(tabName) {
+        state.activeTab = tabName;
+        const views = {
+          BOOKING: document.getElementById('viewBooking'),
+          RX: document.getElementById('viewPrescriptions'),
+          ACCOUNT: document.getElementById('viewAccount')
+        };
+        const tabs = {
+          BOOKING: document.getElementById('tabBooking'),
+          RX: document.getElementById('tabPrescriptions'),
+          ACCOUNT: document.getElementById('tabAccount')
+        };
+        Object.keys(views).forEach(function (k) {
+          if (k === tabName) {
+            views[k].classList.remove('hidden');
+            tabs[k].classList.add('clickable-arch-tab-active');
+          } else {
+            views[k].classList.add('hidden');
+            tabs[k].classList.remove('clickable-arch-tab-active');
+          }
+        });
+      }
+
+      function openSlotStep(deptName, deptCode, baseFee) {
+        state.selectedDept = deptName;
+        state.selectedDeptCode = deptCode;
+        state.selectedFee = baseFee;
+        const total = baseFee + state.platformFee;
+        document.getElementById('lblSelectedDeptPrice').textContent = deptName + ' • ₹' + total;
+        document.getElementById('lblTotalPayable').textContent = '₹' + baseFee + ' + ₹' + state.platformFee + ' = ₹' + total;
+        document.getElementById('stepChoices').classList.add('hidden');
+        document.getElementById('stepSlotConfirm').classList.remove('hidden');
+      }
+
+      function updateCallGateUI() {
+        const btn = document.getElementById('btnStartCallOverlay');
+        const chip = document.getElementById('lblPaymentStatusChip');
+        const summary = document.getElementById('lblBookedSummary');
+        const actionText = document.getElementById('lblCallActionText');
+
+        if (state.paymentConfirmed) {
+          btn.className = 'clickable-pill-cta px-3.5 py-2 text-xs sm:text-sm ml-heavy shrink-0';
+          chip.textContent = 'ഫീസ് അടച്ചു (UTR: ' + state.utrNumber + ')';
+          chip.className = 'text-xs ml-soft text-emerald-800';
+          summary.textContent = state.selectedDept + ' • ' + state.selectedTime;
+          actionText.textContent = 'വീഡിയോ കോൾ ▸';
+        } else {
+          btn.className = 'clickable-pill-locked px-3.5 py-2 text-xs sm:text-sm ml-heavy shrink-0';
+          chip.textContent = 'ഫീസ് അടച്ച ശേഷം കോൾ';
+          chip.className = 'text-xs ml-soft text-slate-600';
+          summary.textContent = 'വിഭാഗം തിരഞ്ഞെടുക്കുക';
+          actionText.textContent = 'ഫീസ് അടയ്ക്കുക ▸';
+        }
+      }
+
+      async function startWebRtcVideoCall() {
+        if (!state.paymentConfirmed) {
+          showToast('ആദ്യം ഫീസ് അടയ്ക്കുക');
+          return;
+        }
+
+        const deptDocLabel = state.selectedDeptCode === 'MEDICINE'
+          ? 'ഡോ. മീര (മെഡിസിൻ)'
+          : (state.selectedDeptCode === 'SURGERY' ? 'ഡോ. അരുൺ (സർജറി)' : 'ഡോ. ശിവജിത്ത് (ജനറൽ)');
+
+        document.getElementById('callDoctorHeader').textContent = deptDocLabel;
+        document.getElementById('callRemoteDeptTitle').textContent = 'ഡോക്ടറെ വിളിക്കുന്നു...';
+        document.getElementById('callStatusSub').textContent = 'പണമടച്ചു (UTR: ' + state.utrNumber + ') • ടോക്കൺ ' + state.patientToken;
+        document.getElementById('callSignalStateText').textContent = 'ഡോക്ടറുടെ ഫോൺ റിംഗ് ചെയ്യുന്നു...';
+        document.getElementById('overlayVideoCall').classList.remove('hidden');
+
+        state.callSecs = 1;
+        if (state.callInterval) clearInterval(state.callInterval);
+        state.callInterval = setInterval(function () {
+          state.callSecs += 1;
+          const m = String(Math.floor(state.callSecs / 60)).padStart(2, '0');
+          const s = String(state.callSecs % 60).padStart(2, '0');
+          document.getElementById('callTimer').textContent = m + ':' + s;
+        }, 1000);
+
+        try {
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            state.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            const localVid = document.getElementById('localVideoEl');
+            localVid.srcObject = state.localStream;
+            localVid.classList.remove('hidden');
+            document.getElementById('lblCamState').classList.add('hidden');
+          }
+        } catch (err) {
+          document.getElementById('lblCamState').classList.remove('hidden');
+        }
+
+        try {
+          const pc = new RTCPeerConnection({
+            iceServers: [{ urls: 'stun:stun.cloudflare.com:3478' }]
+          });
+          state.pcPatient = pc;
+
+          if (state.localStream) {
+            state.localStream.getTracks().forEach(function (track) {
+              pc.addTrack(track, state.localStream);
+            });
+          }
+
+          pc.ontrack = function (event) {
+            const remoteVid = document.getElementById('remoteVideoEl');
+            if (event.streams && event.streams[0]) {
+              remoteVid.srcObject = event.streams[0];
+              remoteVid.classList.remove('hidden');
+              document.getElementById('remotePlaceholder').classList.add('hidden');
+            }
+          };
+
+          const offer = await pc.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: true });
+          await pc.setLocalDescription(offer);
+
+          const targetDocId = state.selectedDeptCode === 'MEDICINE'
+            ? 'doc_meera'
+            : (state.selectedDeptCode === 'SURGERY' ? 'doc_arun' : 'doc_sivajith');
+
+          const callId = 'CALL-' + Date.now().toString().slice(-4);
+          state.activeCallId = callId;
+
+          const patientObj = {
+            call_id: callId,
+            token: '#' + state.patientToken,
+            name: state.patientName,
+            age: state.patientAge,
+            slot: state.selectedTime,
+            complaint: state.selectedSymptom + ' • ' + state.selectedDept,
+            mode: state.consultMode + ' • ' + state.selectedTime,
+            utr: state.utrNumber,
+            paid: true,
+            dept_code: state.selectedDeptCode,
+            doctor_id: targetDocId
+          };
+
+          const payload = {
+            type: 'INCOMING_CALL',
+            call_id: callId,
+            dept: state.selectedDeptCode,
+            doctor_id: targetDocId,
+            patient: patientObj,
+            sdpOffer: pc.localDescription
+          };
+
+          const db = loadD1Tables();
+          db.calls.unshift({
+            call_id: callId,
+            patient_token: state.patientToken,
+            patient_name: state.patientName,
+            patient_age: Number(state.patientAge) || 68,
+            dept_code: state.selectedDeptCode,
+            doctor_id: targetDocId,
+            consult_mode: state.consultMode,
+            slot_time: state.selectedTime,
+            utr_code: state.utrNumber,
+            doctor_fee: state.selectedFee,
+            platform_fee: state.platformFee,
+            amount_paid: state.selectedFee + state.platformFee,
+            paid_verified: 1,
+            status: 'RINGING',
+            created_at: new Date().toLocaleTimeString()
+          });
+          saveD1Tables(db);
+
+          if (state.channel) state.channel.postMessage(payload);
+          try {
+            localStorage.setItem('sivajith_live_signal', JSON.stringify(payload));
+          } catch (e) {}
+
+          try {
+            const apiRes = await callWorkerApi('/api/calls/initiate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                token: state.patientToken,
+                name: state.patientName,
+                age: state.patientAge,
+                dept_code: state.selectedDeptCode,
+                consult_mode: state.consultMode,
+                slot_time: state.selectedTime,
+                utr: state.utrNumber,
+                amount_paid: state.selectedFee + state.platformFee,
+                sdp_offer: pc.localDescription
+              })
+            });
+            if (apiRes.ok) {
+              const apiData = await apiRes.json();
+              if (apiData && apiData.call_id) state.activeCallId = apiData.call_id;
+            }
+          } catch (e) {}
+
+          if (state.pollTimer) clearInterval(state.pollTimer);
+          state.pollTimer = setInterval(async function () {
+            if (!state.activeCallId) return;
+            try {
+              const pollRes = await callWorkerApi('/api/calls/' + state.activeCallId);
+              if (pollRes.ok) {
+                const pollData = await pollRes.json();
+                if (pollData && pollData.status === 'ANSWERED' && pollData.sdp_answer && state.pcPatient) {
+                  document.getElementById('callSignalStateText').textContent = 'ഡോക്ടർ കോൾ സ്വീകരിച്ചു';
+                  await state.pcPatient.setRemoteDescription(new RTCSessionDescription(pollData.sdp_answer));
+                  clearInterval(state.pollTimer);
+                }
+              }
+            } catch (e) {}
+          }, 2000);
+        } catch (e) {}
+      }
+
+      function stopPatientCall() {
+        if (state.callInterval) {
+          clearInterval(state.callInterval);
+          state.callInterval = null;
+        }
+        if (state.pollTimer) {
+          clearInterval(state.pollTimer);
+          state.pollTimer = null;
+        }
+        if (state.localStream) {
+          state.localStream.getTracks().forEach(function (t) { t.stop(); });
+          state.localStream = null;
+        }
+        if (state.pcPatient) {
+          try { state.pcPatient.close(); } catch (e) {}
+          state.pcPatient = null;
+        }
+        document.getElementById('overlayVideoCall').classList.add('hidden');
+      }
+
+      function renderPrescriptions() {
+        const data = prescriptionsData[state.selectedRxKey] || prescriptionsData.RX1;
+        document.getElementById('rxDeptHeading').textContent = data.heading;
+        const container = document.getElementById('rxMedicinesContainer');
+        container.innerHTML = '';
+
+        data.meds.slice(0, 2).forEach(function (m, idx) {
+          const card = document.createElement('div');
+          card.className = 'static-sheet p-3 flex flex-col justify-between bg-white border-l-4 border-l-slate-900';
+          card.innerHTML =
+            '<div class="flex items-center justify-between gap-2 leading-tight">' +
+              '<div class="text-base sm:text-lg ml-heavy text-slate-900">' + (idx + 1) + '. ' + m.name + '</div>' +
+              '<span class="px-2.5 py-0.5 bg-slate-900 text-amber-300 text-xs ml-heavy shrink-0">' + m.days + '</span>' +
+            '</div>' +
+            '<div class="grid grid-cols-3 gap-2 text-center my-1">' +
+              '<div class="py-2 px-1.5 bg-stone-100 border-2 border-slate-300 text-xs sm:text-sm ml-heavy text-slate-900">' +
+                '<div>' + m.morn + '</div><div class="text-[10px] text-slate-600">8:00 AM</div>' +
+              '</div>' +
+              '<div class="py-2 px-1.5 bg-stone-100 border-2 border-slate-300 text-xs sm:text-sm ml-heavy text-slate-900">' +
+                '<div>' + m.noon + '</div><div class="text-[10px] text-slate-600">1:00 PM</div>' +
+              '</div>' +
+              '<div class="py-2 px-1.5 bg-stone-100 border-2 border-slate-300 text-xs sm:text-sm ml-heavy text-slate-900">' +
+                '<div>' + m.night + '</div><div class="text-[10px] text-slate-600">8:00 PM</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="bg-emerald-50 border-l-4 border-emerald-700 px-2.5 py-1 text-xs sm:text-sm ml-soft text-emerald-950">' +
+              'നിർദ്ദേശം: ' + m.food +
+            '</div>';
+          container.appendChild(card);
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', function () {
+        const initDb = loadD1Tables();
+        if (initDb.patients && initDb.patients[0]) {
+          const p0 = initDb.patients[0];
+          state.patientToken = String(p0.token);
+          state.patientName = p0.name;
+          state.patientAge = String(p0.age);
+          state.patientPhone = p0.phone;
+          state.patientPlace = p0.place;
+          document.getElementById('lblHeaderPatientName').textContent = state.patientName.split(' ')[0] + ' (' + state.patientAge + ')';
+          document.getElementById('lblHeaderToken').textContent = state.patientToken;
+          document.getElementById('rxTokenDisplay').textContent = state.patientToken;
+          document.getElementById('inpName').value = state.patientName;
+          document.getElementById('inpAge').value = state.patientAge;
+          document.getElementById('inpPhone').value = state.patientPhone;
+          document.getElementById('inpPlace').value = state.patientPlace;
+        }
+
+        refreshOnlineDoctorCounts();
+        renderPrescriptions();
+        updateCallGateUI();
+
+        try {
+          state.channel = new BroadcastChannel('sivajith_clinic_channel');
+          state.channel.onmessage = function (ev) {
+            if (!ev.data) return;
+            if (ev.data.type === 'PRESENCE_UPDATED') {
+              refreshOnlineDoctorCounts();
+            } else if (ev.data.type === 'CALL_ANSWERED') {
+              document.getElementById('callSignalStateText').textContent = 'ഡോക്ടർ കോൾ സ്വീകരിച്ചു';
+              if (ev.data.sdpAnswer && state.pcPatient) {
+                state.pcPatient.setRemoteDescription(new RTCSessionDescription(ev.data.sdpAnswer)).catch(function () {});
+              }
+            } else if (ev.data.type === 'RX_ISSUED' && ev.data.meds) {
+              prescriptionsData.RX1.heading = ev.data.headingMl || prescriptionsData.RX1.heading;
+              prescriptionsData.RX1.meds = ev.data.meds.map(function (d) {
+                return {
+                  name: d.nameMl || d.nameEn || d.name,
+                  days: (String(d.days).includes('ദിവസം') ? d.days : d.days + ' ദിവസം'),
+                  morn: d.morn ? (String(d.morn).includes('രാവിലെ') ? d.morn : 'രാവിലെ ' + d.morn) : 'ഇല്ല',
+                  noon: d.noon ? (String(d.noon).includes('ഉച്ചയ്ക്ക്') ? d.noon : 'ഉച്ചയ്ക്ക് ' + d.noon) : 'ഇല്ല',
+                  night: d.night ? (String(d.night).includes('രാത്രി') ? d.night : 'രാത്രി ' + d.night) : 'ഇല്ല',
+                  food: d.foodMl || d.food || 'ആഹാരശേഷം കഴിക്കുക'
+                };
+              });
+              renderPrescriptions();
+              stopPatientCall();
+              switchTab('RX');
+              showToast('ഡോക്ടറുടെ കുറിപ്പടി ലഭിച്ചു');
+            }
+          };
+        } catch (e) {}
+
+        window.addEventListener('storage', function (ev) {
+          if (ev.key === D1_STORAGE_KEY) {
+            refreshOnlineDoctorCounts();
+          }
+        });
+
+        document.getElementById('btnBrandHome').addEventListener('click', function () {
+          switchTab('BOOKING');
+          document.getElementById('stepSlotConfirm').classList.add('hidden');
+          document.getElementById('stepChoices').classList.remove('hidden');
+        });
+
+        document.getElementById('btnFontSize').addEventListener('click', function () {
+          state.fontScaleIndex = (state.fontScaleIndex + 1) % state.fontScales.length;
+          const cfg = state.fontScales[state.fontScaleIndex];
+          document.documentElement.style.setProperty('--font-scale', String(cfg.scale));
+          document.getElementById('lblFontSize').textContent = cfg.label;
+        });
+
+        document.getElementById('tabBooking').addEventListener('click', function () { switchTab('BOOKING'); });
+        document.getElementById('tabPrescriptions').addEventListener('click', function () { switchTab('RX'); });
+        document.getElementById('tabAccount').addEventListener('click', function () { switchTab('ACCOUNT'); });
+
+        document.getElementById('choiceGeneral').addEventListener('click', function () {
+          openSlotStep('ജനറൽ', 'GENERAL', 250);
+        });
+        document.getElementById('choiceMedicine').addEventListener('click', function () {
+          openSlotStep('മെഡിസിൻ', 'MEDICINE', 350);
+        });
+        document.getElementById('choiceSurgery').addEventListener('click', function () {
+          openSlotStep('സർജറി', 'SURGERY', 350);
+        });
+
+        document.getElementById('btnBackToChoices').addEventListener('click', function () {
+          document.getElementById('stepSlotConfirm').classList.add('hidden');
+          document.getElementById('stepChoices').classList.remove('hidden');
+        });
+
+        const modeOnlineBtn = document.getElementById('modeOnlineBtn');
+        const modeHomeBtn = document.getElementById('modeHomeBtn');
+        modeOnlineBtn.addEventListener('click', function () {
+          state.consultMode = 'ഫോണിലൂടെ';
+          modeOnlineBtn.classList.add('clickable-tile-selected');
+          modeOnlineBtn.textContent = '◉ ഫോണിലൂടെ';
+          modeHomeBtn.classList.remove('clickable-tile-selected');
+          modeHomeBtn.textContent = '◯ വീട്ടിലേക്ക്';
+        });
+        modeHomeBtn.addEventListener('click', function () {
+          state.consultMode = 'വീട്ടിലേക്ക്';
+          modeHomeBtn.classList.add('clickable-tile-selected');
+          modeHomeBtn.textContent = '◉ വീട്ടിലേക്ക്';
+          modeOnlineBtn.classList.remove('clickable-tile-selected');
+          modeOnlineBtn.textContent = '◯ ഫോണിലൂടെ';
+        });
+
+        document.querySelectorAll('.time-slot-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.selectedTime = btn.getAttribute('data-time') || 'രാവിലെ';
+            document.querySelectorAll('.time-slot-btn').forEach(function (b) {
+              const t = b.getAttribute('data-time');
+              const isSel = t === state.selectedTime;
+              b.classList.toggle('clickable-tile-selected', isSel);
+              b.textContent = (isSel ? '◉ ' : '◯ ') + t;
+            });
+          });
+        });
+
+        document.querySelectorAll('.sym-chip-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.selectedSymptom = btn.getAttribute('data-sym') || 'പനി / ചുമ';
+            document.querySelectorAll('.sym-chip-btn').forEach(function (b) {
+              const s = b.getAttribute('data-sym');
+              const isSel = s === state.selectedSymptom;
+              b.classList.toggle('clickable-tile-selected', isSel);
+              b.textContent = (isSel ? '◉ ' : '◯ ') + s;
+            });
+          });
+        });
+
+        document.getElementById('btnLaunchUpiApp').addEventListener('click', function () {
+          const total = state.selectedFee + state.platformFee;
+          const genUtr = String(Math.floor(1000 + Math.random() * 9000));
+          document.getElementById('inpUtrCode').value = genUtr;
+          document.getElementById('lblCurrentUtr').textContent = genUtr;
+          showToast('യുപിഐ പേയ്മെന്റ് ലഭിച്ചു (₹' + total + ')');
+        });
+
+        document.getElementById('btnConfirmAppointment').addEventListener('click', function () {
+          const utr = document.getElementById('inpUtrCode').value.trim();
+          if (!utr || utr.length < 4) {
+            showToast('യുപിഐ നമ്പർ നൽകുക');
+            return;
+          }
+          state.utrNumber = utr;
+          state.paymentConfirmed = true;
+          updateCallGateUI();
+          document.getElementById('stepSlotConfirm').classList.add('hidden');
+          document.getElementById('stepChoices').classList.remove('hidden');
+          startWebRtcVideoCall();
+        });
+
+        document.getElementById('btnStartCallOverlay').addEventListener('click', function () {
+          if (!state.paymentConfirmed) {
+            openSlotStep(state.selectedDept, state.selectedDeptCode, state.selectedFee);
+            return;
+          }
+          startWebRtcVideoCall();
+        });
+
+        document.getElementById('btnToggleMic').addEventListener('click', function () {
+          state.micOn = !state.micOn;
+          document.getElementById('lblMic').textContent = state.micOn ? 'ശബ്ദം: ഓൺ' : 'ശബ്ദം: ഓഫ്';
+          if (state.localStream) {
+            state.localStream.getAudioTracks().forEach(function (t) { t.enabled = state.micOn; });
+          }
+        });
+        document.getElementById('btnToggleCam').addEventListener('click', function () {
+          state.camOn = !state.camOn;
+          document.getElementById('lblCam').textContent = state.camOn ? 'ക്യാമറ: ഓൺ' : 'ക്യാമറ: ഓഫ്';
+          if (state.localStream) {
+            state.localStream.getVideoTracks().forEach(function (t) { t.enabled = state.camOn; });
+          }
+        });
+        document.getElementById('btnEndCall').addEventListener('click', function () {
+          stopPatientCall();
+          switchTab('RX');
+          showToast('കുറിപ്പടി ലഭ്യമാണ്');
+        });
+
+        const rxLabels = { RX1: 'ഇന്ന്', RX2: 'കഴിഞ്ഞ മാസം', RX3: 'ആഗസ്റ്റ്' };
+        document.querySelectorAll('.rx-history-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.selectedRxKey = btn.getAttribute('data-rx') || 'RX1';
+            document.querySelectorAll('.rx-history-btn').forEach(function (b) {
+              const k = b.getAttribute('data-rx');
+              b.classList.remove('clickable-tile-selected');
+              b.textContent = '◯ ' + rxLabels[k];
+            });
+            btn.classList.add('clickable-tile-selected');
+            btn.textContent = '◉ ' + rxLabels[state.selectedRxKey];
+            renderPrescriptions();
+          });
+        });
+
+        document.getElementById('btnPrintRx').addEventListener('click', function () {
+          showToast('കുറിപ്പടി ഡൗൺലോഡ് ചെയ്യുന്നു');
+          try { window.print(); } catch (e) {}
+        });
+
+        document.getElementById('btnOrderPharmacy').addEventListener('click', function () {
+          document.getElementById('lblPharmacyBtn').textContent = 'ഓർഡർ ഫാർമസിക്ക് അയച്ചു ✓';
+          showToast('ഫാർമസിയിലേക്ക് അയച്ചു');
+        });
+
+        document.getElementById('btnSaveAccount').addEventListener('click', async function () {
+          const name = document.getElementById('inpName').value.trim();
+          const age = document.getElementById('inpAge').value.trim();
+          const phone = document.getElementById('inpPhone').value.trim();
+          const place = document.getElementById('inpPlace').value.trim();
+          if (name) state.patientName = name;
+          if (age) state.patientAge = age;
+          if (phone) state.patientPhone = phone;
+          if (place) state.patientPlace = place;
+
+          state.patientToken = String(Math.floor(1000 + Math.random() * 9000));
+          document.getElementById('lblHeaderPatientName').textContent = state.patientName.split(' ')[0] + ' (' + state.patientAge + ')';
+          document.getElementById('lblHeaderToken').textContent = state.patientToken;
+          document.getElementById('rxTokenDisplay').textContent = state.patientToken;
+          document.getElementById('lblAccountSavedBadge').textContent = 'സേവ് ചെയ്തു ✓';
+
+          const db = loadD1Tables();
+          db.patients.unshift({
+            token: state.patientToken,
+            name: state.patientName,
+            age: Number(state.patientAge) || 68,
+            phone: state.patientPhone,
+            place: state.patientPlace,
+            symptom_note: state.selectedSymptom
+          });
+          saveD1Tables(db);
+
+          try {
+            await callWorkerApi('/api/patients/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                token: state.patientToken,
+                name: state.patientName,
+                age: state.patientAge,
+                phone: state.patientPhone,
+                place: state.patientPlace,
+                symptom_note: state.selectedSymptom
+              })
+            });
+          } catch (e) {}
+
+          switchTab('BOOKING');
+          showToast('രജിസ്ട്രേഷൻ പൂർത്തിയായി');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
