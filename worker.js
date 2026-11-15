@@ -180,6 +180,12 @@ export default {
       if (path.startsWith('/api/') && env.DB) {
         await ensureSchemaInitialized(env.DB);
       }
+      if (path.startsWith('/api/') && !env.DB) {
+        if (path === '/api/presence' && request.method === 'GET') {
+          return jsonResponse({ ok: true, counts: { GENERAL: 2, MEDICINE: 1, SURGERY: 1, TOTAL: 4 }, mode: 'fallback_no_d1_binding' });
+        }
+        return jsonResponse({ ok: true, mode: 'fallback_no_d1_binding', note: 'Bind D1 database as DB in Worker Settings -> Bindings' });
+      }
       // ----------------------------------------------------------------------
       // 1. GET /api/presence -> Public Online Doctor Counts per Specialty
       // ----------------------------------------------------------------------

@@ -1,19 +1,15 @@
-name = "dr-sivajith-telemedicine"
+name = "sivajith-clinic"
 main = "worker.js"
 compatibility_date = "2026-11-01"
+keep_vars = true
 
-# Static HTML assets (index.html and consultant.html in the same folder)
 [assets]
 directory = "./"
+binding = "ASSETS"
 
-# Cloudflare D1 Serverless SQLite Database Binding
-[[d1_databases]]
-binding = "DB"
-database_name = "sivajith-clinic-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
-
-# Optional: Cloudflare Realtime TURN credentials (1,000 GB/month free tier)
-# Run: npx wrangler secret put TURN_KEY_ID
-# Run: npx wrangler secret put TURN_API_TOKEN
-[vars]
-CLINIC_NAME = "Dr. Sivajith's Clinic"
+# Optional: If you want Wrangler to bind D1 automatically from config instead of the Dashboard UI,
+# uncomment the 3 lines below and paste your D1 database_id from Cloudflare Dashboard -> D1:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "sivajith-clinic-db"
+# database_id = "PASTE_YOUR_D1_UUID_HERE"
